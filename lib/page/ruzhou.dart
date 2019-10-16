@@ -44,22 +44,23 @@ class _RuZhouMainViewState extends State<RuZhouMainView> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(IconData(0xe619,fontFamily: 'RuZhouIcons')),
-            title: Text(Strings.HOME,style: TextStyle(fontSize: 12),),
+            title: Text(Strings.HOME),
           ),
           BottomNavigationBarItem(
             icon: Icon(IconData(0xe6c0,fontFamily: 'RuZhouIcons')),
-            title: Text(Strings.FIND,style: TextStyle(fontSize: 12),),
+            title: Text(Strings.FIND),
           ),
           BottomNavigationBarItem(
             icon: Icon(IconData(0xe61f,fontFamily: 'RuZhouIcons')),
-            title: Text(Strings.MINE, style: TextStyle(fontSize: 12),
-            ),
+            title: Text(Strings.MINE),
           ),
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.deepOrangeAccent,
         unselectedItemColor: Colors.grey,
-        iconSize: 18,
+        selectedFontSize: 12.0,
+        unselectedFontSize: 12.0,
+        iconSize: 14,
         onTap: _onItemTapped,
       ),
     );
