@@ -12,7 +12,7 @@ class MessageUtils {
   String _content = "";
   String _sendContent = "";
   String url = "ws://192.168.137.1:15674/ws";
-
+  String sendUrl= "/groupMessage/sendMessage";
 
   void _initStateChanged(String str) {
       _initState = str;
@@ -37,7 +37,7 @@ class MessageUtils {
     if (stomp == null) {
       stomp = JStomp.instance;
     }
-    bool b = await stomp.init(url: url);
+    bool b = await stomp.init(url: url, sendUrl: sendUrl);
     _initStateChanged(b ? "初始化成功" : "初始化失败");
 
     if (b) {
