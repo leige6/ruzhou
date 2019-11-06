@@ -20,7 +20,7 @@ class OneImageItem extends StatelessWidget {
     // TODO: implement build
     return Container(
         padding: EdgeInsets.only(
-            top:ScreenUtil.getInstance().setHeight(12.0),
+            top:ScreenUtil.getInstance().setHeight(24.0),
             left: ScreenUtil.getInstance().setWidth(20.0),
             right: ScreenUtil.getInstance().setWidth(20.0),
         ),
@@ -112,9 +112,9 @@ class OneImageItem extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.only(
-                      top:ScreenUtil.getInstance().setHeight(12.0),
-                    ),
+                   /* padding: EdgeInsets.only(
+                      top:ScreenUtil.getInstance().setHeight(6.0),
+                    ),*/
                     //padding: EdgeInsets.all(ScreenUtil.instance.setWidth(20.0)),
                     height: ScreenUtil.instance.setHeight(150.0),
                     width:  ScreenUtil.instance.setWidth(200.0),

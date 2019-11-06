@@ -18,7 +18,7 @@ class OnlyTitleItem extends StatelessWidget {
     // TODO: implement build
     return Container(
         padding: EdgeInsets.only(
-            top:ScreenUtil.getInstance().setHeight(12.0),
+            top:ScreenUtil.getInstance().setHeight(24.0),
             left: ScreenUtil.getInstance().setWidth(20.0),
             right: ScreenUtil.getInstance().setWidth(20.0),
         ),
