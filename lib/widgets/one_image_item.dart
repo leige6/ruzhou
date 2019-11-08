@@ -4,8 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ruzhou/entity/news_entity.dart';
-
-import 'cached_image.dart';
+import 'load_image.dart';
 
 ///只有一个图片的标题的新闻项
 class OneImageItem extends StatelessWidget {
@@ -33,6 +32,7 @@ class OneImageItem extends StatelessWidget {
                   new Expanded(
                     child: Container(
                         color: Colors.white,
+                        //alignment: Alignment.centerLeft,
                         child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
@@ -50,7 +50,7 @@ class OneImageItem extends StatelessWidget {
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsets.only(top:ScreenUtil.instance.setHeight(10.0)),
+                                padding: EdgeInsets.only(top:ScreenUtil.instance.setHeight(25.0)),
                                 child:Row(
                                     children: <Widget>[
                                       this.newsEntity.isTop?Padding(
@@ -118,7 +118,7 @@ class OneImageItem extends StatelessWidget {
                     //padding: EdgeInsets.all(ScreenUtil.instance.setWidth(20.0)),
                     height: ScreenUtil.instance.setHeight(150.0),
                     width:  ScreenUtil.instance.setWidth(200.0),
-                    child: CachedImageView(200,150,newsEntity.imgageUrl)
+                    child: LoadImage(newsEntity.imgageUrl,width:200,height: 150,)
                   ),
                 ]
             ),

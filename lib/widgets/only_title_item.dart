@@ -40,7 +40,7 @@ class OnlyTitleItem extends StatelessWidget {
                 ),
               ),
               Padding(
-                  padding: EdgeInsets.only(top:ScreenUtil.instance.setHeight(10.0)),
+                  padding: EdgeInsets.only(top:ScreenUtil.instance.setHeight(25.0)),
                   child:Row(
                       children: <Widget>[
                         this.newsEntity.isTop?Padding(
