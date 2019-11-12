@@ -18,7 +18,7 @@ class _RuZhouMainViewState extends State<RuZhouMainView> {
   List<Widget> _pageList = List();
   var _appBarTitles = ['首页', '发现', '我的'];
   List<BottomNavigationBarItem> _listNav;
-
+  final pageController = PageController();
   @override
   void initState() {
     super.initState();
@@ -59,20 +59,26 @@ class _RuZhouMainViewState extends State<RuZhouMainView> {
     return _listNav;
   }
 
-
   void _onItemTapped(int index) {
+    pageController.jumpToPage(index);
+  }
+
+  void onPageChanged(int index) {
     setState(() {
       _selectedIndex = index;
     });
   }
 
+
   @override
   Widget build(BuildContext context) {
     ScreenUtil.instance = ScreenUtil(width: 750, height: 1334)..init(context);
     return Scaffold(
-      body: IndexedStack(
-        index: _selectedIndex,
+      body: PageView(
+        controller: pageController,
+        onPageChanged: onPageChanged,
         children: _pageList,
+        physics: NeverScrollableScrollPhysics(), // 禁止滑动
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,

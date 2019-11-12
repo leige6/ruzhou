@@ -11,7 +11,7 @@ class HomePage extends StatefulWidget {
 }
 
 
-class _HomePageState extends State<HomePage>  with SingleTickerProviderStateMixin{
+class _HomePageState extends State<HomePage>  with SingleTickerProviderStateMixin,AutomaticKeepAliveClientMixin{
 
   final  _tabsList=<TabEntity>[
     TabEntity(1, '推荐','recom',null),
@@ -53,7 +53,7 @@ class _HomePageState extends State<HomePage>  with SingleTickerProviderStateMixi
                 Container(
                   width: double.infinity,
                   height: 40,
-                  padding:  EdgeInsets.only(left:ScreenUtil.getInstance().setWidth(20.0),),
+                  padding:EdgeInsets.only(left:ScreenUtil.getInstance().setWidth(20.0),),
                   alignment: Alignment.centerLeft,
                   color: Colors.white,
                   child: TabBar(
@@ -78,13 +78,13 @@ class _HomePageState extends State<HomePage>  with SingleTickerProviderStateMixi
               ],
             )
           )
-
-
-
-
         );
 
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 
 
 
