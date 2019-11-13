@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ruzhou/entity/tab_entity.dart';
 import 'package:ruzhou/widgets/load_image.dart';
-import 'package:ruzhou/widgets/load_state_layout.dart';
 import 'package:ruzhou/widgets/news_list_view.dart';
 
 
@@ -78,7 +77,6 @@ class _HomePageState extends State<HomePage>  with SingleTickerProviderStateMixi
   Widget _buildFuture(BuildContext context, AsyncSnapshot snapshot) {
     switch (snapshot.connectionState) {
       case ConnectionState.none:
-        print('还没有开始网络请求');
         return _emptyView;
       case ConnectionState.waiting: return _loadingView;  //如果_calculation正在执行则提示：加载中
       default:    //如果_calculation执行完毕
@@ -86,7 +84,6 @@ class _HomePageState extends State<HomePage>  with SingleTickerProviderStateMixi
           return _errorView;
         else    //若_calculation执行正常完成
           //initialIndex初始选中第几个
-          print(tabBarList.length);
           controller = TabController(initialIndex: 1, length: tabBarList.length, vsync: this);
           return Container(
             //宽高都充满屏幕剩余空间
