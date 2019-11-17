@@ -1,10 +1,10 @@
 
 import 'dart:io';
 
-import 'package:jstomp/jstomp.dart';
+//import 'package:jstomp/jstomp.dart';
 
 class MessageUtils {
-  JStomp stomp;
+  /*JStomp stomp;
 
   String _initState = "";
   String _connectionState = "";
@@ -12,9 +12,9 @@ class MessageUtils {
   String _content = "";
   String _sendContent = "";
   String url = "ws://192.168.137.1:15674/ws";
-  String sendUrl= "/groupMessage/sendMessage";
+  String sendUrl= "/groupMessage/sendMessage";*/
 
-  void _initStateChanged(String str) {
+  /*void _initStateChanged(String str) {
       _initState = str;
   }
 
@@ -98,6 +98,6 @@ class MessageUtils {
     bool b = await stomp.destroy();
     stomp = null;
     return b;
-  }
+  }*/
 
 }
