@@ -2,6 +2,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:ruzhou/utils/image_utils.dart';
 
 import 'load_image.dart';
 
@@ -31,7 +32,7 @@ class SelectedImage extends StatelessWidget {
           // 图片圆角展示
           borderRadius: BorderRadius.circular(16.0),
           image: DecorationImage(
-            image: image == null ? LoadAssetImage("icon_plus") : FileImage(image),
+            image: image == null ?  ImageUtils.getAssetImage("icon_plus") : FileImage(image),
             fit: BoxFit.cover
           ),
         ),

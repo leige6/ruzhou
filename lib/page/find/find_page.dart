@@ -18,15 +18,6 @@ class _FindPageState extends State<FindPage> with AutomaticKeepAliveClientMixin{
 
   File _imageFile;
 
-  void _getImage() async{
-    try {
-      _imageFile = await ImagePicker.pickImage(source: ImageSource.gallery, maxWidth: 800, imageQuality: 95);
-      setState(() {});
-    } catch (e) {
-      Toast.show("没有权限，无法打开相册！");
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -60,7 +51,40 @@ class _FindPageState extends State<FindPage> with AutomaticKeepAliveClientMixin{
               ),
               SelectedImage(
                   image: _imageFile,
-                  onTap: _getImage
+                  onTap: (){
+                    showModalBottomSheet(
+                        context: context,
+                        builder: (BuildContext context){
+                          return new Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              new ListTile(
+                                leading: new Icon(Icons.photo_camera),
+                                title: new Text("拍照"),
+                                onTap: () async {
+                                  var image  = await ImagePicker.pickImage(source: ImageSource.camera);
+                                  setState(() {
+                                    _imageFile = image;
+                                  });
+                                  Navigator.pop(context);
+                                },
+                              ),
+                              new ListTile(
+                                leading: new Icon(Icons.photo_library),
+                                title: new Text("相册"),
+                                onTap: () async {
+                                  var image  = await ImagePicker.pickImage(source: ImageSource.gallery);
+                                  setState(() {
+                                    _imageFile = image;
+                                  });
+                                  Navigator.pop(context);
+                                },
+                              ),
+                            ],
+                          );
+                        }
+                    );
+                  }
               ),
             ]
         ),
