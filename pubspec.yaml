@@ -38,8 +38,10 @@ dependencies:
   cupertino_icons: ^0.1.2
   # Dart 常用工具类库 https://github.com/Sky24n/common_utils
   common_utils: ^1.1.3
-    # 图片选择插件 https://github.com/flutter/plugins/tree/master/packages/image_picker
+  # 图片选择插件 https://github.com/flutter/plugins/tree/master/packages/image_picker
   image_picker: ^0.6.1+11
+  # 处理键盘事件 https://github.com/diegoveloper/flutter_keyboard_actions
+  keyboard_actions: ^2.1.2
 
 dev_dependencies:
   flutter_test:

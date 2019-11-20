@@ -1,9 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:keyboard_actions/keyboard_actions.dart';
 import 'package:ruzhou/utils/toast.dart';
 import 'package:ruzhou/widgets/selected_images.dart';
 
@@ -29,35 +31,41 @@ class _FindPageState extends State<FindPage> with AutomaticKeepAliveClientMixin{
         backgroundColor:Colors.blue,
         title: new Text('发现'),
       ),
-      body:SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.only(
-            top:ScreenUtil.getInstance().setHeight(24.0),
-            left: ScreenUtil.getInstance().setWidth(35.0),
-            right: ScreenUtil.getInstance().setWidth(35.0),
-            bottom: ScreenUtil.getInstance().setHeight(24.0),
-          ),
-          color: Colors.white,
-          child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                TextField(
-                  maxLines: 6,
-                  maxLength: 1000,
-                  decoration: InputDecoration(
-                    hintText: '这一刻你的想法...',
-                    contentPadding: EdgeInsets.only(left: 10,top: 2),
-                    fillColor: Colors.white,
-                    filled: true,
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(4),
-                        borderSide: BorderSide.none),
-                  ),
-                ),
-                SelectedImages(total:9),
-              ]
-          ),
-        ),
+      body:defaultTargetPlatform == TargetPlatform.iOS ?FormKeyboardActions(
+        child: _buildBody(),
+      ) :SingleChildScrollView(
+        child: _buildBody()
+      )
+    );
+  }
+
+  _buildBody(){
+    return  Container(
+      padding: EdgeInsets.only(
+        top:ScreenUtil.getInstance().setHeight(24.0),
+        left: ScreenUtil.getInstance().setWidth(35.0),
+        right: ScreenUtil.getInstance().setWidth(35.0),
+        bottom: ScreenUtil.getInstance().setHeight(24.0),
+      ),
+      color: Colors.white,
+      child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            TextField(
+              maxLines: 6,
+              maxLength: 1000,
+              decoration: InputDecoration(
+                hintText: '这一刻你的想法...',
+                contentPadding: EdgeInsets.only(left: 10,top: 2),
+                fillColor: Colors.white,
+                filled: true,
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(4),
+                    borderSide: BorderSide.none),
+              ),
+            ),
+            SelectedImages(total:9),
+          ]
       ),
     );
   }
