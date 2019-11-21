@@ -71,10 +71,8 @@ class _SelectedImagesState extends State<SelectedImages> {
                       if(image!=null){
                         setState(() {
                           SelectdImagesEntity entity=new SelectdImagesEntity(type: 'file',file: image);
-                          if(images.length<widget.total){
-                            images.insert(images.length-1,entity);
-                          }else{
-                            images.insert(images.length-1,entity);
+                          images.insert(images.length-1,entity);
+                          if(images.length>=widget.total){
                             images.removeLast();
                           }
                         });
@@ -90,10 +88,8 @@ class _SelectedImagesState extends State<SelectedImages> {
                     if(image!=null){
                       setState(() {
                         SelectdImagesEntity entity=new SelectdImagesEntity(type: 'file',file: image);
-                        if(images.length<widget.total){
-                          images.insert(images.length-1,entity);
-                        }else{
-                          images.insert(images.length-1,entity);
+                        images.insert(images.length-1,entity);
+                        if(images.length>=widget.total){
                           images.removeLast();
                         }
                       });
