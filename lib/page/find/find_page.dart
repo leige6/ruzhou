@@ -8,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
 import 'package:ruzhou/utils/toast.dart';
 import 'package:ruzhou/utils/utils.dart';
+import 'package:ruzhou/widgets/my_text_filed.dart';
 import 'package:ruzhou/widgets/selected_images.dart';
 
 import 'package:ruzhou/widgets/selected_image.dart';
@@ -25,10 +26,7 @@ class _FindPageState extends State<FindPage> with AutomaticKeepAliveClientMixin{
   final FocusNode _nodeText1 = FocusNode();
   @override
   Widget build(BuildContext context) {
-    if (defaultTargetPlatform == TargetPlatform.iOS){
-      // 因Android平台输入法兼容问题，所以只配置IOS平台
-      FormKeyboardActions.setKeyboardActions(context, Utils.getKeyboardActionsConfig(context, [_nodeText1]));
-    }
+
     final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
     // TODO: implement build
     return Scaffold(
@@ -57,20 +55,10 @@ class _FindPageState extends State<FindPage> with AutomaticKeepAliveClientMixin{
       child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            TextField(
+            MyTextField(
               focusNode: _nodeText1,
               controller: _textController,
-              maxLines: 6,
-              maxLength: 1000,
-              decoration: InputDecoration(
-                hintText: '这一刻你的想法...',
-                contentPadding: EdgeInsets.only(left: 10,top: 2),
-                fillColor: Colors.white,
-                filled: true,
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(4),
-                    borderSide: BorderSide.none),
-              ),
+              config: Utils.getKeyboardActionsConfig(context, [_nodeText1]),
             ),
             SelectedImages(total:9),
           ]
