@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
 import 'package:ruzhou/utils/toast.dart';
+import 'package:ruzhou/utils/utils.dart';
 import 'package:ruzhou/widgets/selected_images.dart';
 
 import 'package:ruzhou/widgets/selected_image.dart';
@@ -20,9 +21,14 @@ class FindPage extends StatefulWidget {
 class _FindPageState extends State<FindPage> with AutomaticKeepAliveClientMixin{
 
   List<File> _imageFiles=[];
+  TextEditingController _textController = TextEditingController();
+  final FocusNode _nodeText1 = FocusNode();
   @override
   Widget build(BuildContext context) {
-
+    if (defaultTargetPlatform == TargetPlatform.iOS){
+      // 因Android平台输入法兼容问题，所以只配置IOS平台
+      FormKeyboardActions.setKeyboardActions(context, Utils.getKeyboardActionsConfig(context, [_nodeText1]));
+    }
     final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
     // TODO: implement build
     return Scaffold(
@@ -52,6 +58,8 @@ class _FindPageState extends State<FindPage> with AutomaticKeepAliveClientMixin{
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             TextField(
+              focusNode: _nodeText1,
+              controller: _textController,
               maxLines: 6,
               maxLength: 1000,
               decoration: InputDecoration(

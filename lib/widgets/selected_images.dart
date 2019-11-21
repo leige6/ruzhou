@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:ruzhou/constant/colors.dart';
 import 'package:ruzhou/entity/selectd_images_entity.dart';
 import 'package:ruzhou/utils/image_utils.dart';
 
@@ -112,9 +113,10 @@ class _SelectedImagesState extends State<SelectedImages> with AutomaticKeepAlive
         height: 110,
         alignment: Alignment.center,
         decoration: BoxDecoration(
+          color:Colours.select_image_bg,
           image:DecorationImage(
               image: ImageUtils.getAssetImage("icon_plus") ,
-              fit: BoxFit.cover
+              fit: BoxFit.none
           ),
         ),
       ),

@@ -42,6 +42,8 @@ dependencies:
   image_picker: ^0.6.1+11
   # 处理键盘事件 https://github.com/diegoveloper/flutter_keyboard_actions
   keyboard_actions: ^2.1.2
+  #图片预览
+  photo_view: ^0.4.2
 
 dev_dependencies:
   flutter_test:
