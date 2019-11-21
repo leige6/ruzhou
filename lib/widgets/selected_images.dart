@@ -26,7 +26,7 @@ class SelectedImages extends StatefulWidget {
 
 }
 
-class _SelectedImagesState extends State<SelectedImages> {
+class _SelectedImagesState extends State<SelectedImages> with AutomaticKeepAliveClientMixin{
   File _imageFile;
   List<SelectdImagesEntity> images=<SelectdImagesEntity>[new SelectdImagesEntity(type: 'icon')];
   @override
@@ -72,7 +72,7 @@ class _SelectedImagesState extends State<SelectedImages> {
                         setState(() {
                           SelectdImagesEntity entity=new SelectdImagesEntity(type: 'file',file: image);
                           images.insert(images.length-1,entity);
-                          if(images.length>=widget.total){
+                          if(images.length>widget.total){
                             images.removeLast();
                           }
                         });
@@ -89,7 +89,7 @@ class _SelectedImagesState extends State<SelectedImages> {
                       setState(() {
                         SelectdImagesEntity entity=new SelectdImagesEntity(type: 'file',file: image);
                         images.insert(images.length-1,entity);
-                        if(images.length>=widget.total){
+                        if(images.length>widget.total){
                           images.removeLast();
                         }
                       });
@@ -131,8 +131,11 @@ class _SelectedImagesState extends State<SelectedImages> {
         ),
       ),
     );
-
-
   });
+
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 
 }
