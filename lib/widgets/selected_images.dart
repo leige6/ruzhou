@@ -1,14 +1,20 @@
 
 
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:ruzhou/constant/colors.dart';
+import 'package:ruzhou/constant/colours.dart';
+import 'package:ruzhou/entity/gallery_image_entity.dart';
 import 'package:ruzhou/entity/selectd_images_entity.dart';
+import 'package:ruzhou/router/find_router.dart';
+import 'package:ruzhou/router/fluro_convert_util.dart';
+import 'package:ruzhou/router/fluro_navigator.dart';
 import 'package:ruzhou/utils/image_utils.dart';
+import 'package:ruzhou/widgets/image_gallery.dart';
 
 class SelectedImages extends StatefulWidget {
 
@@ -30,6 +36,7 @@ class SelectedImages extends StatefulWidget {
 class _SelectedImagesState extends State<SelectedImages> with AutomaticKeepAliveClientMixin{
   File _imageFile;
   List<SelectdImagesEntity> images=<SelectdImagesEntity>[new SelectdImagesEntity(type: 'icon')];
+  List<GalleryImageEntity> list=<GalleryImageEntity>[];
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -73,6 +80,8 @@ class _SelectedImagesState extends State<SelectedImages> with AutomaticKeepAlive
                         setState(() {
                           SelectdImagesEntity entity=new SelectdImagesEntity(type: 'file',file: image);
                           images.insert(images.length-1,entity);
+                          GalleryImageEntity gaEntity=new GalleryImageEntity(list.length+1, 'local', image.path);
+                          list.add(gaEntity);
                           if(images.length>widget.total){
                             images.removeLast();
                           }
@@ -90,6 +99,8 @@ class _SelectedImagesState extends State<SelectedImages> with AutomaticKeepAlive
                       setState(() {
                         SelectdImagesEntity entity=new SelectdImagesEntity(type: 'file',file: image);
                         images.insert(images.length-1,entity);
+                        GalleryImageEntity gaEntity=new GalleryImageEntity(list.length+1, 'local', image.path);
+                        list.add(gaEntity);
                         if(images.length>widget.total){
                           images.removeLast();
                         }
@@ -121,6 +132,9 @@ class _SelectedImagesState extends State<SelectedImages> with AutomaticKeepAlive
         ),
       ),
     ):InkWell(
+      onTap: (){
+        _jumpToGallery(index,list);
+      },
       child: Container(
         width: 110,
         height: 110,
@@ -135,6 +149,14 @@ class _SelectedImagesState extends State<SelectedImages> with AutomaticKeepAlive
     );
   });
 
+
+  void _jumpToGallery(index, list) {
+    /// 对中文进行编码
+    /// 对自定义类型 转为 json string
+    String listJson = jsonEncode(list);
+    print('---------------图片json----------------------'+listJson);
+    NavigatorUtils.push(context,'${FindRouter.imageGalleryPage}?index=${index}&photoList=${listJson}');
+  }
 
   @override
   // TODO: implement wantKeepAlive

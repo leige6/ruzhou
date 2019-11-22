@@ -1,8 +1,11 @@
 
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
+import 'package:ruzhou/entity/selectd_images_entity.dart';
 
 class ImageGallery extends StatefulWidget {
   final List photoList;
@@ -18,6 +21,7 @@ class _ImageGalleryState extends State<ImageGallery> {
   int initialIndex; //初始index
   int length;
   int title;
+  String type;
   @override
   void initState() {
     currentIndex = widget.index;
@@ -55,9 +59,9 @@ class _ImageGalleryState extends State<ImageGallery> {
                 scrollPhysics: const BouncingScrollPhysics(),
                 builder: (BuildContext context, int index) {
                   return PhotoViewGalleryPageOptions(
-                    imageProvider: NetworkImage(widget.photoList[index]['image']),
+                    imageProvider: widget.photoList[index]['type']=='local'?FileImage(new File(widget.photoList[index]['url'])):NetworkImage(widget.photoList[index]['url']),
                     initialScale: PhotoViewComputedScale.contained * 1,
-                    heroTag: widget.photoList[index]['id'],
+                    heroTag: widget.photoList[index]['type']=='local'?index:widget.photoList[index]['id'],
                   );
                 },
                 itemCount: widget.photoList.length,

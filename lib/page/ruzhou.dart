@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:ruzhou/constant/colors.dart';
+import 'package:ruzhou/constant/colours.dart';
 import 'package:ruzhou/constant/strings.dart';
 import 'package:ruzhou/widgets/load_image.dart';
 import 'find/find_page.dart';
