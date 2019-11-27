@@ -37,6 +37,12 @@ class _SelectedImagesState extends State<SelectedImages> with AutomaticKeepAlive
   File _imageFile;
   List<SelectdImagesEntity> images=<SelectdImagesEntity>[new SelectdImagesEntity(type: 'icon')];
   List<GalleryImageEntity> list=<GalleryImageEntity>[];
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -150,16 +156,44 @@ class _SelectedImagesState extends State<SelectedImages> with AutomaticKeepAlive
   });
 
 
-  void _jumpToGallery(index, list) {
+  void _jumpToGallery(inde, list) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder:(context)=>new ImageGallery(photoList:list,index:inde)
+        )
+    );
     /// 对中文进行编码
     /// 对自定义类型 转为 json string
-    String listJson = jsonEncode(list);
+   /* String listJson = jsonEncode(list);
     print('---------------图片json----------------------'+listJson);
-    NavigatorUtils.push(context,'${FindRouter.imageGalleryPage}?index=${index}&photoList=${listJson}');
+    NavigatorUtils.pushResult(context,FindRouter.imageGalleryPage + "?index=$index&photoList=${Uri.encodeComponent(listJson)}",Feedback);*/
+  }
+
+  void  Feedback(result){
+      if(result!=null){
+        String listJson = jsonEncode(result);
+        print('---------------回调json----------------------'+listJson);
+        if(!mounted){
+          return;
+        }
+        setState(() {
+          images.clear();
+          for(int i=0;i<result.length;i++){
+            GalleryImageEntity entity=result[i];
+            SelectdImagesEntity selectEntity=new SelectdImagesEntity(type: 'file',file: new File(entity.url));
+            images.add(selectEntity);
+          }
+        });
+      }
   }
 
   @override
   // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
 
+  /*@override
+  void dispose() {
+    super.dispose();
+  }*/
 }

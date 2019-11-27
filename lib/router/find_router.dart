@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:fluro/fluro.dart';
 import 'package:ruzhou/entity/gallery_image_entity.dart';
 import 'package:ruzhou/page/find/find_page.dart';
@@ -15,10 +17,10 @@ class FindRouter implements IRouterProvider{
   @override
   void initRouter(Router router) {
     router.define(findPage, handler: Handler(handlerFunc: (_, params) => FindPage()));
-    router.define(
-        imageGalleryPage, handler: Handler(handlerFunc: (context, params) {
+    router.define(imageGalleryPage, handler: Handler(handlerFunc: (context, params) {
       String ind= params['index']?.first;//取出传参
-      List photoList = ( params['photoList']?.first as List)
+      String photoStr=Uri.decodeComponent(params['photoList']?.first);
+      List photoList = ( jsonDecode(photoStr) as List)
           ?.map((e) =>
       e == null ? null : GalleryImageEntity.fromJson(e as Map<String, dynamic>))
           ?.toList();

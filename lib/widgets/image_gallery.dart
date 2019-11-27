@@ -5,12 +5,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
+import 'package:ruzhou/entity/gallery_image_entity.dart';
 import 'package:ruzhou/entity/selectd_images_entity.dart';
+import 'package:ruzhou/router/fluro_navigator.dart';
+
+import 'app_bar.dart';
 
 class ImageGallery extends StatefulWidget {
   final List photoList;
   final int index;
-  ImageGallery({this.photoList, this.index});
+  ImageGallery({Key key,this.photoList, this.index}):super(key:key);
   @override
   _ImageGalleryState createState() => _ImageGalleryState();
 }
@@ -40,9 +44,12 @@ class _ImageGalleryState extends State<ImageGallery> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('${title} / ${length}'),
-        centerTitle: true,
+      appBar: MyAppBar(
+        backgroundColor:Colors.blue,
+        centerTitle: '${title} / ${length}',
+        onGoBack: (){
+          NavigatorUtils.goBackWithParams(context, widget.photoList);
+        },
       ),
       body: Container(
           decoration: BoxDecoration(
@@ -58,10 +65,11 @@ class _ImageGalleryState extends State<ImageGallery> {
                 scrollDirection: Axis.horizontal,
                 scrollPhysics: const BouncingScrollPhysics(),
                 builder: (BuildContext context, int index) {
+                  GalleryImageEntity entity=widget.photoList[index];
                   return PhotoViewGalleryPageOptions(
-                    imageProvider: widget.photoList[index]['type']=='local'?FileImage(new File(widget.photoList[index]['url'])):NetworkImage(widget.photoList[index]['url']),
+                    imageProvider: entity.type=='local'?FileImage(new File(entity.url)):NetworkImage(entity.url),
                     initialScale: PhotoViewComputedScale.contained * 1,
-                    heroTag: widget.photoList[index]['type']=='local'?index:widget.photoList[index]['id'],
+                    heroTag: entity.type=='local'?index:entity.id,
                   );
                 },
                 itemCount: widget.photoList.length,
