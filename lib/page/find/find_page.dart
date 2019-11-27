@@ -6,8 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
+import 'package:ruzhou/constant/colours.dart';
+import 'package:ruzhou/entity/gallery_image_entity.dart';
+import 'package:ruzhou/entity/selectd_images_entity.dart';
+import 'package:ruzhou/utils/image_utils.dart';
 import 'package:ruzhou/utils/toast.dart';
 import 'package:ruzhou/utils/utils.dart';
+import 'package:ruzhou/widgets/image_gallery.dart';
+import 'package:ruzhou/widgets/load_image.dart';
 import 'package:ruzhou/widgets/my_text_filed.dart';
 import 'package:ruzhou/widgets/selected_images.dart';
 
@@ -20,8 +26,10 @@ class FindPage extends StatefulWidget {
 
 
 class _FindPageState extends State<FindPage> with AutomaticKeepAliveClientMixin{
-
+  List<SelectdImagesEntity> images=<SelectdImagesEntity>[new SelectdImagesEntity(type: 'icon')];
+  List<GalleryImageEntity> list=<GalleryImageEntity>[];
   List<File> _imageFiles=[];
+  int total= 9;
   TextEditingController _textController = TextEditingController();
   final FocusNode _nodeText1 = FocusNode();
   @override
@@ -45,6 +53,9 @@ class _FindPageState extends State<FindPage> with AutomaticKeepAliveClientMixin{
 
   _buildBody(){
     return  Container(
+      constraints: BoxConstraints.expand(
+        height: MediaQuery.of(context).size.height,
+      ),
       padding: EdgeInsets.only(
         top:ScreenUtil.getInstance().setHeight(24.0),
         left: ScreenUtil.getInstance().setWidth(35.0),
@@ -60,9 +71,108 @@ class _FindPageState extends State<FindPage> with AutomaticKeepAliveClientMixin{
               controller: _textController,
               config: Utils.getKeyboardActionsConfig(context, [_nodeText1]),
             ),
-            SelectedImages(total:9),
+            //SelectedImages(total:9),
+        Container(
+          padding: EdgeInsets.fromLTRB(15, 16, 15, 8),
+          child: GridView.builder(
+            shrinkWrap: true, //解决 listview 嵌套报错
+            physics: NeverScrollableScrollPhysics(), //禁用滑动事件
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              //横轴元素个数
+                crossAxisCount: 3,
+                //纵轴间距
+                mainAxisSpacing: 10.0,
+                //横轴间距
+                crossAxisSpacing: 10.0,
+                //子组件宽高长度比例
+                childAspectRatio: 1.0),
+            itemBuilder: (BuildContext context, int index) {
+              SelectdImagesEntity entity=images[index];
+              return GestureDetector(
+                onTap: (){
+                  entity.type=='icon'?_selectImage():_jumpToGallery(index, list);
+                },
+                child: entity.type=='icon'?
+                Container(
+                  width: 110,
+                  height: 110,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color:Colours.select_image_bg,
+                    image:DecorationImage(
+                        image: ImageUtils.getAssetImage("icon_plus") ,
+                        fit: BoxFit.none
+                    ),
+                  ),
+                ):Image.file(entity.file, width: 110,
+                    height: 110,fit: BoxFit.cover)
+              );
+            },
+            itemCount: images.length,
+          ),
+        )
           ]
       ),
+    );
+  }
+
+  void _selectImage (){
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext context){
+          return new Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              new ListTile(
+                leading: new Icon(Icons.photo_camera),
+                title: new Text("拍照"),
+                onTap: () async {
+                  Navigator.pop(context);
+                  var image  = await ImagePicker.pickImage(source: ImageSource.camera,imageQuality:50);
+                  if(image!=null){
+                    setState(() {
+                      SelectdImagesEntity entity=new SelectdImagesEntity(type: 'file',file: image);
+                      images.insert(images.length-1,entity);
+                      GalleryImageEntity gaEntity=new GalleryImageEntity(list.length+1, 'local', image.path);
+                      list.add(gaEntity);
+                      if(images.length>total){
+                        images.removeLast();
+                      }
+                    });
+                  }
+                },
+              ),
+              new ListTile(
+                leading: new Icon(Icons.photo_library),
+                title: new Text("相册"),
+                onTap: () async {
+                  Navigator.pop(context);
+                  var image  = await ImagePicker.pickImage(source: ImageSource.gallery,imageQuality:50);
+                  if(image!=null){
+                    setState(() {
+                      SelectdImagesEntity entity=new SelectdImagesEntity(type: 'file',file: image);
+                      images.insert(images.length-1,entity);
+                      GalleryImageEntity gaEntity=new GalleryImageEntity(list.length+1, 'local', image.path);
+                      list.add(gaEntity);
+                      if(images.length>total){
+                        images.removeLast();
+                      }
+                    });
+                  }
+                },
+              ),
+            ],
+          );
+        }
+    );
+  }
+
+  void _jumpToGallery(inde, list) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder:(context)=>new ImageGallery(photoList:list,index:inde)
+        )
     );
   }
 
