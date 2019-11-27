@@ -19,7 +19,7 @@ class ImageGallery extends StatefulWidget {
   _ImageGalleryState createState() => _ImageGalleryState();
 }
 
-class _ImageGalleryState extends State<ImageGallery> {
+class _ImageGalleryState extends State<ImageGallery> with AutomaticKeepAliveClientMixin{
   @override
   int currentIndex = 0;
   int initialIndex; //初始index
@@ -47,9 +47,6 @@ class _ImageGalleryState extends State<ImageGallery> {
       appBar: MyAppBar(
         backgroundColor:Colors.blue,
         centerTitle: '${title} / ${length}',
-        onGoBack: (){
-          NavigatorUtils.goBackWithParams(context, widget.photoList);
-        },
       ),
       body: Container(
           decoration: BoxDecoration(
@@ -91,4 +88,8 @@ class _ImageGalleryState extends State<ImageGallery> {
           )),
     );
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }
