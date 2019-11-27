@@ -15,6 +15,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget{
     this.centerTitle: "",
     this.actionName: "",
     this.backImg: "assets/image/ic_back_black.png",
+    this.onBack,
     this.onPressed,
     this.isBack: true
   }): super(key: key);
@@ -24,6 +25,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget{
   final String centerTitle;
   final String backImg;
   final String actionName;
+  final VoidCallback onBack;
   final VoidCallback onPressed;
   final bool isBack;
 
@@ -64,10 +66,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget{
                 ],
               ),
               isBack ? IconButton(
-                onPressed: (){
-                  FocusScope.of(context).unfocus();
-                  Navigator.maybePop(context);
-                },
+                onPressed: onBack,
                 tooltip: 'Back',
                 padding: const EdgeInsets.all(12.0),
                 icon: Image.asset(
@@ -87,7 +86,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget{
                   child: actionName.isEmpty ? Container() :
                   FlatButton(
                     child: Text(actionName, key: const Key('actionName')),
-                    textColor: _overlayStyle == SystemUiOverlayStyle.light ? Colours.dark_text : Colours.text,
+                    textColor: _overlayStyle == SystemUiOverlayStyle.light ? Colours.material_bg : Colours.text,
                     highlightColor: Colors.transparent,
                     onPressed: onPressed,
                   ),

@@ -90,7 +90,7 @@ class _NewsListViewState extends State<NewsListView>  with SingleTickerProviderS
           loadingText: '正在加载...',
           loadedText: '加载完成',
           loadFailedText: '加载失败',
-          noMoreText: '没有更多',
+          noMoreText: '没有更多了呦',
           infoText:'更新于 %T',
           //enableHapticFeedback: true,
         ),

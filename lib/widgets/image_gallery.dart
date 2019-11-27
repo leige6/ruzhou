@@ -19,7 +19,7 @@ class ImageGallery extends StatefulWidget {
   _ImageGalleryState createState() => _ImageGalleryState();
 }
 
-class _ImageGalleryState extends State<ImageGallery> with AutomaticKeepAliveClientMixin{
+class _ImageGalleryState extends State<ImageGallery>{
   @override
   int currentIndex = 0;
   int initialIndex; //初始index
@@ -42,11 +42,23 @@ class _ImageGalleryState extends State<ImageGallery> with AutomaticKeepAliveClie
     });
   }
 
+  void delete() {
+    setState(() {
+      length=length-1;
+      widget.photoList.removeAt(currentIndex);
+    });
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MyAppBar(
         backgroundColor:Colors.blue,
         centerTitle: '${title} / ${length}',
+        actionName:'删除',
+        onBack: (){
+          NavigatorUtils.goBackWithParams(context, widget.photoList);
+        },
+        onPressed:delete,
       ),
       body: Container(
           decoration: BoxDecoration(
@@ -89,7 +101,4 @@ class _ImageGalleryState extends State<ImageGallery> with AutomaticKeepAliveClie
     );
   }
 
-  @override
-  // TODO: implement wantKeepAlive
-  bool get wantKeepAlive => true;
 }

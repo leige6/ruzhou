@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
@@ -9,6 +10,8 @@ import 'package:keyboard_actions/keyboard_actions.dart';
 import 'package:ruzhou/constant/colours.dart';
 import 'package:ruzhou/entity/gallery_image_entity.dart';
 import 'package:ruzhou/entity/selectd_images_entity.dart';
+import 'package:ruzhou/router/find_router.dart';
+import 'package:ruzhou/router/fluro_navigator.dart';
 import 'package:ruzhou/utils/image_utils.dart';
 import 'package:ruzhou/utils/toast.dart';
 import 'package:ruzhou/utils/utils.dart';
@@ -168,12 +171,32 @@ class _FindPageState extends State<FindPage> with AutomaticKeepAliveClientMixin{
   }
 
   void _jumpToGallery(inde, list) {
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder:(context)=>new ImageGallery(photoList:list,index:inde)
-        )
-    );
+    String listJson = jsonEncode(list);
+    print('---------------图片json----------------------'+listJson);
+    NavigatorUtils.pushResult(context,FindRouter.imageGalleryPage + "?index=$inde&photoList=${Uri.encodeComponent(listJson)}",Feedback);
+  }
+
+  void  Feedback(result){
+    if(result!=null){
+      String listJson = jsonEncode(result);
+      print('---------------回调json----------------------'+listJson);
+     if(!mounted){
+        return;
+      }
+      setState(() {
+        images.clear();
+        list=result;
+        for(int i=0;i<result.length;i++){
+          GalleryImageEntity entity=result[i];
+          SelectdImagesEntity selectEntity=new SelectdImagesEntity(type: 'file',file: new File(entity.url));
+          images.add(selectEntity);
+        }
+        if(images.length<9){
+          SelectdImagesEntity selectEntity=new SelectdImagesEntity(type: 'icon');
+          images.add(selectEntity);
+        }
+      });
+    }
   }
 
   @override
