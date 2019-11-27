@@ -11,22 +11,25 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
+//flutter is a SingleTickerProviderStateMixin but multiple tickers were created. 报错，原因是多个地方调用setState请求重绘，但是state使用的是SingleTickerProviderStateMixin ，将其改成TickerProviderStateMixin即可
+//原文链接：https://blog.csdn.net/email_jade/article/details/85317859
+class _HomePageState extends State<HomePage>  with TickerProviderStateMixin,AutomaticKeepAliveClientMixin{
 
-class _HomePageState extends State<HomePage>  with SingleTickerProviderStateMixin,AutomaticKeepAliveClientMixin{
-
-
+  var _futureBuilderFuture;//防止FutureBuilder不必要的刷新
   TabController controller;
   final tabBarList=<Widget>[];
   final tabBarViewList=<Widget>[];
   //当整个页面dispose时，记得把控制器也dispose掉，释放内存
   @override
   void dispose() {
-    controller.dispose();
     super.dispose();
+    controller.dispose();
   }
 
   void initState() {
     super.initState();
+    ///用_futureBuilderFuture来保存_gerData()的结果，以避免不必要的ui重绘:相关blog地址：https://blog.csdn.net/u011272795/article/details/83010974
+    _futureBuilderFuture=_loadData();
   }
 
   void errorRetry(){
@@ -34,10 +37,10 @@ class _HomePageState extends State<HomePage>  with SingleTickerProviderStateMixi
       tabBarList.clear();
       tabBarViewList.clear();
     });
-    loadData();
+    _loadData();
   }
 
-  Future  loadData() async{
+  Future  _loadData() async{
     //模拟网络请求
    return Future.delayed(Duration(seconds: 2)).then((_res) async {
         //此为加载结束
@@ -59,6 +62,8 @@ class _HomePageState extends State<HomePage>  with SingleTickerProviderStateMixi
 
   @override
   Widget build(BuildContext context) {
+    //super.build(context)此句是为了防止BottomNavigationBar+PageView页面状态保持失效
+    super.build(context);
     // TODO: implement build
     return Scaffold(
           appBar: new AppBar(
@@ -67,7 +72,7 @@ class _HomePageState extends State<HomePage>  with SingleTickerProviderStateMixi
           ),
           body:FutureBuilder(
             builder: _buildFuture,
-            future: loadData(), // 用户定义的需要异步执行的代码，类型为Future<String>或者null的变量或函数
+            future: _futureBuilderFuture, // 用户定义的需要异步执行的代码，类型为Future<String>或者null的变量或函数
           ),
         );
 

@@ -37,7 +37,7 @@ class _FindPageState extends State<FindPage> with AutomaticKeepAliveClientMixin{
   final FocusNode _nodeText1 = FocusNode();
   @override
   Widget build(BuildContext context) {
-
+    super.build(context);
     final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
     // TODO: implement build
     return Scaffold(
@@ -203,4 +203,10 @@ class _FindPageState extends State<FindPage> with AutomaticKeepAliveClientMixin{
   // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
 
+
+  @override
+  void dispose() {
+    super.dispose();
+    _textController.dispose();
+  }
 }

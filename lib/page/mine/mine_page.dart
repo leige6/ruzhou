@@ -11,6 +11,7 @@ class MinePage extends StatefulWidget {
 class _MinePageState extends State<MinePage>  with AutomaticKeepAliveClientMixin{
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     // TODO: implement build
     return  Center(
         child: Text(
