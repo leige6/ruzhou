@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -28,6 +30,9 @@ class _HomePageState extends State<HomePage>  with TickerProviderStateMixin,Auto
 
   void initState() {
     super.initState();
+    Timer _timer=Timer.periodic(new Duration(seconds: 2),(timer){
+      print("-------------------hello word----------------");
+    });
     ///用_futureBuilderFuture来保存_gerData()的结果，以避免不必要的ui重绘:相关blog地址：https://blog.csdn.net/u011272795/article/details/83010974
     _futureBuilderFuture=_loadData();
   }

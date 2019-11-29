@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:ruzhou/router/application.dart';
 import 'package:ruzhou/router/routers.dart';
 
@@ -31,7 +32,15 @@ class RuZhouApp extends StatelessWidget {
       onGenerateRoute: Application.router.generator,
       theme: ThemeData(
         primarySwatch: Colors.blue,
-      )
+      ),
+      localizationsDelegates: [                             //此处
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: [                                   //此处
+        const Locale('zh','CH'),
+        const Locale('en','US'),
+      ],
     );
   }
 }
