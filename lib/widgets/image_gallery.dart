@@ -52,11 +52,10 @@ class _ImageGalleryState extends State<ImageGallery>{
             NavigatorUtils.goBack(context);
           },
           onPressed:() {
-            //length=length-1;
-            Provider.of<SelectImagesModel>(context).removeAt(currentIndex);
-            if(length==0){
+            if(length-1==0){
               NavigatorUtils.goBack(context);
             }
+            Provider.of<SelectImagesModel>(context).removeAt(currentIndex);
           },
         ),
         body:  Store.connect<SelectImagesModel>( builder: (ctx, selectImages, child) {
