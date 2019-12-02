@@ -32,12 +32,18 @@ class _ImageGalleryState extends State<ImageGallery>{
     super.initState();
   }
 
-  Widget build(BuildContext context) {
+  @override //由于provider不能在initState中初始化，可能会报错，所以重写此方法
+  void didChangeDependencies() {
+    print('didChangeDependencies调用了');
     initialIndex=Provider.of<SelectImagesModel>(context).index;
     galleryImageEntitys=Provider.of<SelectImagesModel>(context).galleryImageEntitys;
     currentIndex = initialIndex;
-    length = galleryImageEntitys.length-1; //不展示‘+’号图片
+    length = galleryImageEntitys.length-1;//不展示‘+’号图片
     pageController=PageController(initialPage: initialIndex);
+  }
+
+
+  Widget build(BuildContext context) {
     return WillPopScope(
       //监听物理按键返回
       onWillPop: (){
@@ -46,7 +52,7 @@ class _ImageGalleryState extends State<ImageGallery>{
       child:  Scaffold(
         appBar: MyAppBar(
           backgroundColor:Colors.blue,
-          centerTitle: '${Provider.of<SelectImagesModel>(context).index+1} / ${length}',
+          centerTitle: '${currentIndex+1} / ${length}',
           actionName:'删除',
           onBack: (){
             NavigatorUtils.goBack(context);
