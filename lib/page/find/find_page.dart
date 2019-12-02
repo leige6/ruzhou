@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
@@ -9,18 +8,13 @@ import 'package:image_picker/image_picker.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
 import 'package:ruzhou/constant/colours.dart';
 import 'package:ruzhou/entity/gallery_image_entity.dart';
-import 'package:ruzhou/entity/selectd_images_entity.dart';
+import 'package:ruzhou/model/select_images_model.dart';
+import 'package:ruzhou/model/store.dart';
 import 'package:ruzhou/router/find_router.dart';
 import 'package:ruzhou/router/fluro_navigator.dart';
 import 'package:ruzhou/utils/image_utils.dart';
-import 'package:ruzhou/utils/toast.dart';
 import 'package:ruzhou/utils/utils.dart';
-import 'package:ruzhou/widgets/image_gallery.dart';
-import 'package:ruzhou/widgets/load_image.dart';
 import 'package:ruzhou/widgets/my_text_filed.dart';
-import 'package:ruzhou/widgets/selected_images.dart';
-
-import 'package:ruzhou/widgets/selected_image.dart';
 
 class FindPage extends StatefulWidget {
   @override
@@ -29,10 +23,9 @@ class FindPage extends StatefulWidget {
 
 
 class _FindPageState extends State<FindPage> with AutomaticKeepAliveClientMixin{
-  List<SelectdImagesEntity> images=<SelectdImagesEntity>[new SelectdImagesEntity(type: 'icon')];
-  List<GalleryImageEntity> list=<GalleryImageEntity>[];
-  List<File> _imageFiles=[];
   int total= 9;
+  List<GalleryImageEntity> galleryImageEntitys;
+  int length=0;
   TextEditingController _textController = TextEditingController();
   final FocusNode _nodeText1 = FocusNode();
   @override
@@ -74,46 +67,51 @@ class _FindPageState extends State<FindPage> with AutomaticKeepAliveClientMixin{
               controller: _textController,
               config: Utils.getKeyboardActionsConfig(context, [_nodeText1]),
             ),
-            //SelectedImages(total:9),
-        Container(
-          padding: EdgeInsets.fromLTRB(15, 16, 15, 8),
-          child: GridView.builder(
-            shrinkWrap: true, //解决 listview 嵌套报错
-            physics: NeverScrollableScrollPhysics(), //禁用滑动事件
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              //横轴元素个数
-                crossAxisCount: 3,
-                //纵轴间距
-                mainAxisSpacing: 10.0,
-                //横轴间距
-                crossAxisSpacing: 10.0,
-                //子组件宽高长度比例
-                childAspectRatio: 1.0),
-            itemBuilder: (BuildContext context, int index) {
-              SelectdImagesEntity entity=images[index];
-              return GestureDetector(
-                onTap: (){
-                  entity.type=='icon'?_selectImage():_jumpToGallery(index, list);
-                },
-                child: entity.type=='icon'?
-                Container(
-                  width: 110,
-                  height: 110,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color:Colours.select_image_bg,
-                    image:DecorationImage(
-                        image: ImageUtils.getAssetImage("icon_plus") ,
-                        fit: BoxFit.none
-                    ),
-                  ),
-                ):Image.file(entity.file, width: 110,
-                    height: 110,fit: BoxFit.cover)
+            Store.connect<SelectImagesModel>( builder: (ctx, selectImages, child) {
+              galleryImageEntitys=selectImages.galleryImageEntitys;
+              length=selectImages.length>9?9:selectImages.length;
+              return  Container(
+                      padding: EdgeInsets.fromLTRB(15, 16, 15, 8),
+                      child: GridView.builder(
+                        shrinkWrap: true, //解决 listview 嵌套报错
+                        physics: NeverScrollableScrollPhysics(), //禁用滑动事件
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          //横轴元素个数
+                            crossAxisCount: 3,
+                            //纵轴间距
+                            mainAxisSpacing: 10.0,
+                            //横轴间距
+                            crossAxisSpacing: 10.0,
+                            //子组件宽高长度比例
+                            childAspectRatio: 1.0),
+                        itemBuilder: (BuildContext context, int index) {
+                          GalleryImageEntity entity=galleryImageEntitys[index];
+                          return GestureDetector(
+                              onTap: (){
+                                selectImages.setIndex(index);
+                                entity.type=='icon'?_selectImage():_jumpToGallery();
+                              },
+                              child: entity.type=='icon'?
+                              Container(
+                                width: 110,
+                                height: 110,
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                  color:Colours.select_image_bg,
+                                  image:DecorationImage(
+                                      image: ImageUtils.getAssetImage("icon_plus") ,
+                                      fit: BoxFit.none
+                                  ),
+                                ),
+                              ):Image.file(new File(entity.url), width: 110,
+                                  height: 110,fit: BoxFit.cover)
+                          );
+                        },
+                        itemCount: length,
+                      ),
               );
-            },
-            itemCount: images.length,
-          ),
-        )
+             }
+            )
           ]
       ),
     );
@@ -126,57 +124,55 @@ class _FindPageState extends State<FindPage> with AutomaticKeepAliveClientMixin{
           return new Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              new ListTile(
-                leading: new Icon(Icons.photo_camera),
-                title: new Text("拍照"),
-                onTap: () async {
-                  Navigator.pop(context);
-                  var image  = await ImagePicker.pickImage(source: ImageSource.camera,imageQuality:50);
-                  if(image!=null){
-                    setState(() {
-                      SelectdImagesEntity entity=new SelectdImagesEntity(type: 'file',file: image);
-                      images.insert(images.length-1,entity);
-                      GalleryImageEntity gaEntity=new GalleryImageEntity(list.length+1, 'local', image.path);
-                      list.add(gaEntity);
-                      if(images.length>total){
-                        images.removeLast();
-                      }
-                    });
-                  }
-                },
-              ),
-              new ListTile(
-                leading: new Icon(Icons.photo_library),
-                title: new Text("相册"),
-                onTap: () async {
-                  Navigator.pop(context);
-                  var image  = await ImagePicker.pickImage(source: ImageSource.gallery,imageQuality:50);
-                  if(image!=null){
-                    setState(() {
-                      SelectdImagesEntity entity=new SelectdImagesEntity(type: 'file',file: image);
-                      images.insert(images.length-1,entity);
-                      GalleryImageEntity gaEntity=new GalleryImageEntity(list.length+1, 'local', image.path);
-                      list.add(gaEntity);
-                      if(images.length>total){
-                        images.removeLast();
-                      }
-                    });
-                  }
-                },
-              ),
+                Store.connect<SelectImagesModel>(
+                    builder: (ctx, selectImages, child) {
+                      return new ListTile(
+                        leading: new Icon(Icons.photo_camera),
+                        title: new Text("拍照"),
+                        onTap: () async {
+                          Navigator.pop(context);
+                          var image  = await ImagePicker.pickImage(source: ImageSource.camera,imageQuality:50);
+                          if(image!=null){
+                            GalleryImageEntity gaEntity=new GalleryImageEntity(selectImages.length-1, 'local', image.path);
+                            selectImages.add(gaEntity);
+                          }
+                        },
+                      );
+                    },
+                ),
+                Store.connect<SelectImagesModel>(
+                    builder: (ctx, selectImages, child) {
+                      return  new ListTile(
+                        leading: new Icon(Icons.photo_library),
+                        title: new Text("相册"),
+                        onTap: () async {
+                          Navigator.pop(context);
+                          var image  = await ImagePicker.pickImage(source: ImageSource.gallery,imageQuality:50);
+                          if(image!=null){
+                            GalleryImageEntity gaEntity=new GalleryImageEntity(selectImages.length-1, 'local', image.path);
+                            selectImages.add(gaEntity);
+                          }
+                        },
+                      );
+                    }
+                )
             ],
           );
         }
     );
   }
 
-  void _jumpToGallery(inde, list) {
+  /*void _jumpToGallery(inde, list) {
     String listJson = jsonEncode(list);
     print('---------------图片json----------------------'+listJson);
     NavigatorUtils.pushResult(context,FindRouter.imageGalleryPage + "?index=$inde&photoList=${Uri.encodeComponent(listJson)}",Feedback);
+  }*/
+
+  void _jumpToGallery() {
+    NavigatorUtils.push(context,FindRouter.imageGalleryPage);
   }
 
-  void  Feedback(result){
+  /*void  Feedback(result){
     if(result!=null){
       String listJson = jsonEncode(result);
       print('---------------回调json----------------------'+listJson);
@@ -197,7 +193,7 @@ class _FindPageState extends State<FindPage> with AutomaticKeepAliveClientMixin{
         }
       });
     }
-  }
+  }*/
 
   @override
   // TODO: implement wantKeepAlive

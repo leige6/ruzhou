@@ -17,7 +17,8 @@ class FindRouter implements IRouterProvider{
   @override
   void initRouter(Router router) {
     router.define(findPage, handler: Handler(handlerFunc: (_, params) => FindPage()));
-    router.define(imageGalleryPage, handler: Handler(handlerFunc: (context, params) {
+    router.define(imageGalleryPage, handler: Handler(handlerFunc: (_, params) => ImageGallery()));
+   /* router.define(imageGalleryPage, handler: Handler(handlerFunc: (context, params) {
       String ind= params['index']?.first;//取出传参
       String photoStr=Uri.decodeComponent(params['photoList']?.first);
       List photoList = ( jsonDecode(photoStr) as List)
@@ -25,7 +26,7 @@ class FindRouter implements IRouterProvider{
       e == null ? null : GalleryImageEntity.fromJson(e as Map<String, dynamic>))
           ?.toList();
       return ImageGallery(photoList:photoList,index:FluroConvertUtils.string2int(ind));
-    }));
+    }));*/
   }
 
 }
