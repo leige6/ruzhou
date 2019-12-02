@@ -35,9 +35,8 @@ class _ImageGalleryState extends State<ImageGallery>{
   Widget build(BuildContext context) {
     initialIndex=Provider.of<SelectImagesModel>(context).index;
     galleryImageEntitys=Provider.of<SelectImagesModel>(context).galleryImageEntitys;
-    //galleryImageEntitys.removeLast();
     currentIndex = initialIndex;
-    length = galleryImageEntitys.length-1;
+    length = galleryImageEntitys.length-1; //不展示‘+’号图片
     pageController=PageController(initialPage: initialIndex);
     return WillPopScope(
       //监听物理按键返回
