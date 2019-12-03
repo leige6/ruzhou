@@ -121,24 +121,28 @@ class _FindPageState extends State<FindPage> with AutomaticKeepAliveClientMixin{
     showModalBottomSheet(
         context: context,
         builder: (BuildContext context){
-          return new Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
+          return Padding(
+            padding:EdgeInsets.only(
+              bottom: ScreenUtil.getInstance().setHeight(50.0),
+            ),
+            child: new Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
                 Store.connect<SelectImagesModel>(
-                    builder: (ctx, selectImages, child) {
-                      return new ListTile(
-                        leading: new Icon(Icons.photo_camera),
-                        title: new Text("拍照"),
-                        onTap: () async {
-                          Navigator.pop(context);
-                          var image  = await ImagePicker.pickImage(source: ImageSource.camera,imageQuality:50);
-                          if(image!=null){
-                            GalleryImageEntity gaEntity=new GalleryImageEntity(selectImages.length-1, 'local', image.path);
-                            selectImages.add(gaEntity);
-                          }
-                        },
-                      );
-                    },
+                  builder: (ctx, selectImages, child) {
+                    return new ListTile(
+                      leading: new Icon(Icons.photo_camera),
+                      title: new Text("拍照"),
+                      onTap: () async {
+                        Navigator.pop(context);
+                        var image  = await ImagePicker.pickImage(source: ImageSource.camera,imageQuality:50);
+                        if(image!=null){
+                          GalleryImageEntity gaEntity=new GalleryImageEntity(selectImages.length-1, 'local', image.path);
+                          selectImages.add(gaEntity);
+                        }
+                      },
+                    );
+                  },
                 ),
                 Store.connect<SelectImagesModel>(
                     builder: (ctx, selectImages, child) {
@@ -156,8 +160,11 @@ class _FindPageState extends State<FindPage> with AutomaticKeepAliveClientMixin{
                       );
                     }
                 )
-            ],
+              ],
+            ),
           );
+
+
         }
     );
   }

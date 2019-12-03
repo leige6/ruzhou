@@ -74,11 +74,14 @@ class _RuZhouMainViewState extends State<RuZhouMainView> {
   Widget build(BuildContext context) {
     ScreenUtil.instance = ScreenUtil(width: 750, height: 1334)..init(context);
     return Scaffold(
-      body: PageView(
-        controller: pageController,
-        onPageChanged: onPageChanged,
-        children: _pageList,
-        physics: NeverScrollableScrollPhysics(), // 禁止滑动
+      body: SafeArea(
+        top:false,
+        child: PageView(
+          controller: pageController,
+          onPageChanged: onPageChanged,
+          children: _pageList,
+          physics: NeverScrollableScrollPhysics(), // 禁止滑动
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
