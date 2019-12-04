@@ -83,7 +83,7 @@ class _ImageGalleryState extends State<ImageGallery>{
                       return PhotoViewGalleryPageOptions(
                         imageProvider: entity.type=='local'? FileImage(new File(entity.url)):NetworkImage(entity.url),
                         initialScale: PhotoViewComputedScale.contained * 1,
-                        heroTag: entity.type=='local'?index:entity.id,
+                        heroAttributes: PhotoViewHeroAttributes(tag: entity.type=='local'?index:entity.id),
                       );
                     },
                     itemCount: length,

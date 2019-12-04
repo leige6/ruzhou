@@ -30,8 +30,8 @@ class _MinePageState extends State<MinePage>  with AutomaticKeepAliveClientMixin
 
 class CirclePainter extends CustomPainter{
   Paint _paint;
-  double textWidth = 100;
-  double textFontSize = 12.0;
+  double textWidth = 80;
+  double textFontSize = 10.0;
   ui.Paragraph paragraph;
   CirclePainter(){
     _paint = Paint();
@@ -47,7 +47,7 @@ class CirclePainter extends CustomPainter{
     )
       ..pushStyle(
         ui.TextStyle(
-            color: Colours.text_gray_c, textBaseline: ui.TextBaseline.alphabetic),
+            color: Colours.dark_text, textBaseline: ui.TextBaseline.alphabetic),
       )
       ..addText("六芒星咒符66");
 
@@ -68,9 +68,9 @@ class CirclePainter extends CustomPainter{
     double height = size.height;
     canvas.save();
     canvas.drawColor(Colours.bg_color, BlendMode.src);
-    canvas.rotate((-25 * pi) / 180);
+    canvas.rotate((-5 * pi) / 180);
     int index = 0;
-    for (double positionY = height / 15; positionY <= height; positionY += height / 15) {
+    for (double positionY = height / 10; positionY <= height; positionY += height / 18) {
       double fromX = -width + (index++ % 2) * textWidth;
       for (double positionX = fromX; positionX < width; positionX += textWidth * 2) {
         canvas.drawParagraph(paragraph, Offset(positionX,positionY));

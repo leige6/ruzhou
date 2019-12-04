@@ -47,7 +47,7 @@ class _HomePageState extends State<HomePage>  with TickerProviderStateMixin,Auto
 
   Future  _loadData() async{
     //模拟网络请求
-   return Future.delayed(Duration(seconds: 2)).then((_res) async {
+   return Future.delayed(Duration(seconds: 1)).then((_res) async {
         //此为加载结束
         tabBarList.clear();
         tabBarViewList.clear();
