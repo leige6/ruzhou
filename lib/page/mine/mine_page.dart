@@ -48,6 +48,7 @@ class CirclePainter extends CustomPainter{
         fontSize: textFontSize,
         textDirection: TextDirection.ltr,
         maxLines: 2,
+        ellipsis: '...',
       ),
     )
       ..pushStyle(
