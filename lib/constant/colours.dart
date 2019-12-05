@@ -41,5 +41,11 @@ class Colours {
   static const Color dark_bg_gray_ = Color(0xFF242526);
 
   static const Color select_image_bg = Color(0xFFEDEDED);
+
+  static const Color second_text = Color(0xFF454545);
+  static const Color user_head_bg = Color(0xFFF7F7F7);
+  static const Color mine_icon_color = Color(0xFF343434);
+  static const Color mine_icon_text = Color(0xFF9F9F9F);
+
 }
 

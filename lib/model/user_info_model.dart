@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart' show ChangeNotifier;
+import 'package:ruzhou/entity/user_entity.dart';
 
 class UserInfoModel with ChangeNotifier {
-  String _name = "用户名";
-  String testData = "测试数据"; //尽量私有变量定义
-  String get name => _name;
+  UserEntity _user;
+  UserEntity get user => _user;
 
-  void setName(name) {
-    _name = name;
-    notifyListeners(); //通知更新数据
+  void setUser(UserEntity user) {
+    _user = user;
+    notifyListeners();
   }
 
   @override
