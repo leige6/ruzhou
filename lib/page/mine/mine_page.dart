@@ -16,10 +16,15 @@ class _MinePageState extends State<MinePage>  with AutomaticKeepAliveClientMixin
   Widget build(BuildContext context) {
     //屏幕的尺寸
     Size size = MediaQuery.of(context).size;
-    return CustomPaint(
-          size: size,
-          painter: CirclePainter(),
-        );
+    return new Opacity(
+      opacity: 0.3,
+      child: CustomPaint(
+        size: size,
+        painter: CirclePainter(),
+      ),
+    );
+
+
   }
 
   @override
@@ -42,7 +47,7 @@ class CirclePainter extends CustomPainter{
         textAlign: TextAlign.center,
         fontSize: textFontSize,
         textDirection: TextDirection.ltr,
-        //maxLines: 100,
+        maxLines: 2,
       ),
     )
       ..pushStyle(
