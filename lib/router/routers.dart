@@ -30,7 +30,7 @@ class Routers {
       String title = params['title']?.first;
       String url = params['webUrl']?.first;
       String type = params['type']?.first;
-      return HtmlWebView(title: Uri.decodeComponent(title), webUrl: Uri.decodeComponent(url),type: FluroConvertUtils.string2int(type),);
+      return HtmlWebView(title: FluroConvertUtils.fluroCnParamsDecode(title), webUrl: Uri.decodeComponent(url),type: FluroConvertUtils.string2int(type),);
     }));
     _listRouter.clear();
     /// 各自路由由各自模块管理，统一在此添加初始化

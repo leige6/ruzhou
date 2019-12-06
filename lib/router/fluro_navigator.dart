@@ -44,6 +44,6 @@ class NavigatorUtils {
   static goWebViewPage(BuildContext context, String title, String webUrl,String type){
     //fluro 不支持传中文,需转换
 
-    push(context, '${Routers.webViewPage}?title=${Uri.encodeComponent(title)}&webUrl=${Uri.encodeComponent(webUrl)}&type=${type}');
+    push(context, '${Routers.webViewPage}?title=${Uri.encodeComponent(FluroConvertUtils.fluroCnParamsEncode(title))}&webUrl=${Uri.encodeComponent(webUrl)}&type=${type}');
   }
 }
