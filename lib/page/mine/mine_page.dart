@@ -5,6 +5,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:ruzhou/constant/colours.dart';
 import 'package:ruzhou/model/user_info_model.dart';
+import 'package:ruzhou/router/find_router.dart';
+import 'package:ruzhou/router/fluro_navigator.dart';
+import 'package:ruzhou/router/mine_router.dart';
 import 'package:ruzhou/utils/image_utils.dart';
 import 'package:ruzhou/widgets/load_image.dart';
 import 'package:ruzhou/widgets/water_mark.dart';
@@ -18,13 +21,14 @@ class MinePage extends StatefulWidget {
 class _MinePageState extends State<MinePage>  with AutomaticKeepAliveClientMixin{
 
   final TextStyle textStyle =
-  TextStyle(fontSize: 18, fontWeight: FontWeight.w400);
+  TextStyle(fontSize: ScreenUtil.getInstance().setSp(30), fontWeight: FontWeight.w400);
 
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
         appBar: new AppBar(
-          backgroundColor:Colors.blue,
+          backgroundColor:Colours.app_main,
+          centerTitle:true,
           title: new Text('我的'),
         ),
         body: Container(
@@ -36,7 +40,7 @@ class _MinePageState extends State<MinePage>  with AutomaticKeepAliveClientMixin
                         return Container(
                             color: Colours.material_bg,
                             padding:EdgeInsets.only(
-                              top: ScreenUtil.getInstance().setHeight(80.0),
+                              top: ScreenUtil.getInstance().setHeight(50.0),
                               left: ScreenUtil.getInstance().setWidth(35.0),
                               right: ScreenUtil.getInstance().setWidth(35.0),
                               bottom: ScreenUtil.getInstance().setHeight(60.0),
@@ -127,9 +131,10 @@ class _MinePageState extends State<MinePage>  with AutomaticKeepAliveClientMixin
                   ),
                   ListTile(
                     title: Text(
-                      '全网搜',
+                      '下载缓存',
                       style: textStyle,
                     ),
+                    trailing: new Icon(Icons.keyboard_arrow_right,color:Colours.text_gray,),
                     onTap: () {
 
                     },
@@ -140,7 +145,62 @@ class _MinePageState extends State<MinePage>  with AutomaticKeepAliveClientMixin
                       right: ScreenUtil.getInstance().setWidth(35.0),
                     ),
                     child:new Divider(),
-                  )
+                  ),
+                  ListTile(
+                    title: Text(
+                      '常见问题',
+                      style: textStyle,
+                    ),
+                    trailing: new Icon(Icons.keyboard_arrow_right,color:Colours.text_gray,),
+                    onTap: () {
+
+                    },
+                  ),
+                  Container(
+                    padding:EdgeInsets.only(
+                      left: ScreenUtil.getInstance().setWidth(35.0),
+                      right: ScreenUtil.getInstance().setWidth(35.0),
+                    ),
+                    child:new Divider(),
+                  ),
+                  ListTile(
+                    title: Text(
+                      '关于我们',
+                      style: textStyle,
+                    ),
+                    trailing: new Icon(Icons.keyboard_arrow_right,color:Colours.text_gray,),
+                    onTap: () {
+
+                    },
+                  ),
+                  Container(
+                    padding:EdgeInsets.only(
+                      left: ScreenUtil.getInstance().setWidth(35.0),
+                      right: ScreenUtil.getInstance().setWidth(35.0),
+                    ),
+                    child:new Divider(),
+                  ),
+                  ListTile(
+                    title: Text(
+                      '服务条款',
+                      style: textStyle,
+                    ),
+                    trailing: new Icon(Icons.keyboard_arrow_right,color:Colours.text_gray,),
+                    onTap: () {
+                      NavigatorUtils.push(context,MineRouter.serviceAgeree);
+                    },
+                  ),
+                  Container(
+                    padding:EdgeInsets.only(
+                      left: ScreenUtil.getInstance().setWidth(35.0),
+                      right: ScreenUtil.getInstance().setWidth(35.0),
+                    ),
+                    child:new Divider(),
+                  ),
+                  SizedBox(
+                    height:  ScreenUtil.getInstance().setHeight(100.0),
+                  ),
+
                 ],
               )
             )

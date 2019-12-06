@@ -69,10 +69,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget{
                 onPressed: onBack,
                 tooltip: 'Back',
                 padding: const EdgeInsets.all(12.0),
-                icon: Image.asset(
-                  backImg,
-                  color: _overlayStyle == SystemUiOverlayStyle.light ? Colours.material_bg : Colours.text,
-                ),
+                icon: Icon(Icons.arrow_back_ios,color:  _overlayStyle == SystemUiOverlayStyle.light ? Colours.material_bg : Colours.text,),
               ) : Gaps.empty,
               Positioned(
                 right: 0.0,

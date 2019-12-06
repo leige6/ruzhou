@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 import 'package:provider/provider.dart';
+import 'package:ruzhou/constant/colours.dart';
 import 'package:ruzhou/entity/gallery_image_entity.dart';
 import 'package:ruzhou/model/select_images_model.dart';
 import 'package:ruzhou/model/store.dart';
@@ -51,7 +52,7 @@ class _ImageGalleryState extends State<ImageGallery>{
       },
       child:  Scaffold(
         appBar: MyAppBar(
-          backgroundColor:Colors.blue,
+          backgroundColor:Colours.app_main,
           centerTitle: '${currentIndex+1} / ${length}',
           actionName:'删除',
           onBack: (){

@@ -104,5 +104,4 @@ flutter:
   assets:
     - assets/image/
     - assets/image/nav/
-    - assets/html/shuiyin.html
-    - assets/html/js/shuiyin.js
+    - assets/html/loginAgr.html

@@ -36,7 +36,8 @@ class _FindPageState extends State<FindPage> with AutomaticKeepAliveClientMixin{
     return Scaffold(
       key: _scaffoldKey,
       appBar: new AppBar(
-        backgroundColor:Colors.blue,
+        backgroundColor:Colours.app_main,
+        centerTitle:true,
         title: new Text('发现'),
       ),
       body:defaultTargetPlatform == TargetPlatform.iOS ?FormKeyboardActions(

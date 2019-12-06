@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ruzhou/constant/colours.dart';
 import 'package:ruzhou/entity/tab_entity.dart';
 import 'package:ruzhou/widgets/load_image.dart';
 import 'package:ruzhou/widgets/news_list_view.dart';
@@ -72,7 +73,8 @@ class _HomePageState extends State<HomePage>  with TickerProviderStateMixin,Auto
     // TODO: implement build
     return Scaffold(
           appBar: new AppBar(
-            backgroundColor:Colors.blue,
+            backgroundColor:Colours.app_main,
+            centerTitle:true,
             title: new Text('首页'),
           ),
           body:FutureBuilder(
