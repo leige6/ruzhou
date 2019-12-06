@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:ruzhou/page/home/home_page.dart';
 import 'package:ruzhou/page/ruzhou.dart';
 import 'package:ruzhou/router/router_init.dart';
+import 'package:ruzhou/widgets/html_web_view.dart';
 import 'package:ruzhou/widgets/webview_page.dart';
 
 import '404.dart';
 import 'find_router.dart';
+import 'fluro_convert_util.dart';
 import 'home_router.dart';
 import 'mine_router.dart';
 
@@ -24,11 +26,11 @@ class Routers {
 
     router.define(root, handler: Handler(
         handlerFunc: (BuildContext context, Map<String, List<String>> params) => RuZhouMainView()));
-
     router.define(webViewPage, handler: Handler(handlerFunc: (_, params){
       String title = params['title']?.first;
-      String url = params['url']?.first;
-      return WebViewPage(title: title, url: url);
+      String url = params['webUrl']?.first;
+      String type = params['type']?.first;
+      return HtmlWebView(title: Uri.decodeComponent(title), webUrl: Uri.decodeComponent(url),type: FluroConvertUtils.string2int(type),);
     }));
     _listRouter.clear();
     /// 各自路由由各自模块管理，统一在此添加初始化

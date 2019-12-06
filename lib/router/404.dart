@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:ruzhou/constant/colours.dart';
+
+import 'fluro_navigator.dart';
 
 class WidgetNotFound extends StatelessWidget {
 
@@ -6,7 +9,14 @@ class WidgetNotFound extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar:  new AppBar(
-        backgroundColor:Colors.blue,
+        backgroundColor:Colours.app_main,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios,color: Colours.material_bg,),
+          onPressed: (){
+            NavigatorUtils.goBack(context);
+          },
+        ),
+        centerTitle: true,
         title: new Text('页面不存在'),
       ),
       body: Container(

@@ -2,6 +2,7 @@ import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 
 import 'application.dart';
+import 'fluro_convert_util.dart';
 import 'routers.dart';
 
 /// fluro的路由跳转工具类
@@ -40,8 +41,9 @@ class NavigatorUtils {
   }
   
   /// 跳到WebView页
-  static goWebViewPage(BuildContext context, String title, String url){
+  static goWebViewPage(BuildContext context, String title, String webUrl,String type){
     //fluro 不支持传中文,需转换
-    push(context, '${Routers.webViewPage}?title=${Uri.encodeComponent(title)}&url=${Uri.encodeComponent(url)}');
+
+    push(context, '${Routers.webViewPage}?title=${Uri.encodeComponent(title)}&webUrl=${Uri.encodeComponent(webUrl)}&type=${type}');
   }
 }

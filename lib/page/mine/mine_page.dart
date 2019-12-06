@@ -170,7 +170,7 @@ class _MinePageState extends State<MinePage>  with AutomaticKeepAliveClientMixin
                     ),
                     trailing: new Icon(Icons.keyboard_arrow_right,color:Colours.text_gray,),
                     onTap: () {
-
+                      NavigatorUtils.goWebViewPage(context,'关于我们', 'https://www.baidu.com/','1');
                     },
                   ),
                   Container(
@@ -187,7 +187,7 @@ class _MinePageState extends State<MinePage>  with AutomaticKeepAliveClientMixin
                     ),
                     trailing: new Icon(Icons.keyboard_arrow_right,color:Colours.text_gray,),
                     onTap: () {
-                      NavigatorUtils.push(context,MineRouter.serviceAgeree);
+                      NavigatorUtils.goWebViewPage(context,'服务条款', 'assets/html/loginAgr.html','0');
                     },
                   ),
                   Container(
