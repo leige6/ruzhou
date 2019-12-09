@@ -1,221 +1,151 @@
-
-
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:ruzhou/constant/colours.dart';
+import 'package:keyboard_actions/keyboard_actions.dart';
+import 'package:ruzhou/constant/common.dart';
+import 'package:flustars/flustars.dart' as FlutterStars;
+import 'package:ruzhou/constant/gaps.dart';
+import 'package:ruzhou/constant/styles.dart';
 import 'package:ruzhou/router/fluro_navigator.dart';
+import 'package:ruzhou/utils/utils.dart';
 import 'package:ruzhou/widgets/app_bar.dart';
+import 'package:ruzhou/widgets/find_my_text_filed.dart';
+import 'package:ruzhou/widgets/my_button.dart';
+import 'package:ruzhou/widgets/my_text_filed.dart';
+
+
 
 class LoginPage extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _LoginPageState();
+  _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
+  //定义一个controller
+  TextEditingController _nameController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+  final FocusNode _nodeText1 = FocusNode();
+  final FocusNode _nodeText2 = FocusNode();
+  bool _isClick = false;
 
-  var textStr='登陆你的本地通,精彩永不丢失';
-  var _userNameController = new TextEditingController();
-  var _userPassController = new TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    //监听输入改变
+    _nameController.addListener(_verify);
+    _passwordController.addListener(_verify);
+    _nameController.text = FlutterStars.SpUtil.getString(Constant.phone);
+  }
+
+  void _verify(){
+    String name = _nameController.text;
+    String password = _passwordController.text;
+    bool isClick = true;
+    if (name.isEmpty || name.length < 11) {
+      isClick = false;
+    }
+    if (password.isEmpty || password.length < 6) {
+      isClick = false;
+    }
+
+    /// 状态不一样在刷新，避免重复不必要的setState
+    if (isClick != _isClick){
+      setState(() {
+        _isClick = isClick;
+      });
+    }
+  }
+
+  void _login(){
+    FlutterStars.SpUtil.putString(Constant.phone, _nameController.text);
+    //NavigatorUtils.push(context, StoreRouter.auditPage);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return  new Scaffold(
+    return Scaffold(
         appBar: MyAppBar(
-          backgroundColor:Colours.app_main,
-          centerTitle: '登陆',
-          onBack: (){
-            NavigatorUtils.goBack(context);
-          }
+          isBack: false,
+          actionName: '验证码登录',
+          onPressed: (){
+            //NavigatorUtils.push(context, LoginRouter.smsLoginPage);
+          },
         ),
-        body:ListView(
-            children: <Widget>[
-              new Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    loginTopInfo(),
-                    userNameInput(),
-                    passWordInput(),
-                    loginButton(),
-                    findPassAndRegister()
-                  ])
-            ])
+        body: defaultTargetPlatform == TargetPlatform.iOS ? FormKeyboardActions(
+          child: _buildBody(),
+        ) : SingleChildScrollView(
+          child: _buildBody(),
+        )
     );
-
   }
 
-  Widget loginTopInfo()  {
-    return new Padding(
-      padding:EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 0.0),
-      child: new Text(
-          textStr,
-          textAlign:TextAlign.center,
-          maxLines:1,
-          style: new TextStyle(
-            color: Colours.dark_text_gray,
-            fontSize: 20.0,
+  _buildBody(){
+    return Padding(
+      padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 20.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          const Text(
+            "密码登录",
+            style: TextStyles.textBold26,
+          ),
+          Gaps.vGap16,
+          MyTextField(
+            key: const Key('phone'),
+            focusNode: _nodeText1,
+            controller: _nameController,
+            maxLength: 11,
+            keyboardType: TextInputType.phone,
+            hintText: "请输入账号",
+          ),
+          Gaps.vGap8,
+          MyTextField(
+            key: const Key('password'),
+            keyName: 'password',
+            focusNode: _nodeText2,
+            config: Utils.getKeyboardActions(context, [_nodeText1, _nodeText2]),
+            isInputPwd: true,
+            controller: _passwordController,
+            maxLength: 16,
+            hintText: "请输入密码",
+          ),
+          Gaps.vGap10,
+          Gaps.vGap15,
+          MyButton(
+            key: const Key('login'),
+            onPressed: _isClick ? _login : null,
+            text: "登录",
+          ),
+          Container(
+            height: 40.0,
+            alignment: Alignment.centerRight,
+            child: GestureDetector(
+              child: Text(
+                '忘记密码',
+                style: Theme.of(context).textTheme.subtitle,
+              ),
+              onTap: (){
+                //NavigatorUtils.push(context, LoginRouter.resetPasswordPage);
+              },
+            ),
+          ),
+          Gaps.vGap16,
+          Container(
+              alignment: Alignment.center,
+              child: GestureDetector(
+                child: Text(
+                  '还没账号？快去注册',
+                  style: TextStyle(
+                      color: Theme.of(context).primaryColor
+                  ),
+                ),
+                onTap: (){
+                  //NavigatorUtils.push(context, LoginRouter.registerPage);
+                },
+              )
           )
+        ],
       ),
-    );
-  }
-/*
-  用户名输入框
- */
-  Widget userNameInput(){
-    return new Container(
-      //padding: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-        margin: EdgeInsets.fromLTRB(30.0, 60.0, 30.0, 20.0),
-        padding: EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 0.0),
-        decoration: BoxDecoration(
-            border: Border.all(color: Colors.grey, width: 1.0),
-            borderRadius: BorderRadius.circular(50.0)),
-        child: new TextField(
-          controller: _userNameController,
-          decoration: new InputDecoration(
-              hintText: "请输入用户名",
-              hintStyle:TextStyle(
-                color: Colours.dark_text_gray,
-                fontSize: 16,
-              ),
-              border: InputBorder.none,
-              prefixIcon: Icon(Icons.account_box,
-                color:Colours.dark_text_gray ,
-              ),
-              suffixIcon: new IconButton(
-                color:Colours.dark_text_gray ,
-                // padding: EdgeInsets.all(1.0),
-                icon: new Icon(Icons.clear),
-                iconSize:20,
-                onPressed: (){
-                  _userNameController.clear();
-                } ,
-              )
-          ),
-          maxLines:1,
-          textAlign: TextAlign.left,//设置内容显示位置是否居中等
-          style: new TextStyle(
-            fontSize: 16.0,
-            color: Colors.black,
-          ),
-          //autofocus: true,//自动获取焦点
-        )
-    );
-  }
-
-  /*
-  密码输入框
- */
-  Widget passWordInput(){
-    return new Container(
-      //padding: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-        margin: EdgeInsets.fromLTRB(30.0, 30.0, 30.0, 20.0),
-        padding: EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 0.0),
-        decoration: BoxDecoration(
-            border: Border.all(color: Colors.grey, width: 1.0),
-            borderRadius: BorderRadius.circular(50.0)),
-        child: new TextField(
-          controller: _userPassController,
-          decoration: new InputDecoration(
-              hintText: "请输入密码",
-              hintStyle:TextStyle(
-                color: Colours.dark_text_gray,
-                fontSize: 16,
-              ),
-              border: InputBorder.none,
-              prefixIcon: Icon(Icons.lock,
-                color:Colours.dark_text_gray ,
-              ),
-              suffixIcon: new IconButton(
-                color:Colours.dark_text_gray ,
-                // padding: EdgeInsets.all(1.0),
-                icon: new Icon(Icons.clear),
-                iconSize:20,
-                onPressed: (){
-                  _userPassController.clear();
-                } ,
-              )
-          ),
-          maxLines:1,
-          textAlign: TextAlign.left,//设置内容显示位置是否居中等
-          style: new TextStyle(
-            fontSize: 16.0,
-            color: Colors.black,
-          ),
-          //autofocus: true,//自动获取焦点
-          obscureText: true,
-        )
-    );
-  }
-
-  /*
-  登陆按钮
- */
-  Widget loginButton(){
-    return new Container(
-        width: 360.0,
-        margin: EdgeInsets.fromLTRB(30.0, 30.0, 30.0, 20.0),
-        //padding: EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 0.0),
-        child:  new FlatButton(
-            color: Colours.app_main,
-            shape: RoundedRectangleBorder(
-                side: BorderSide(
-                  color: Colours.app_main,
-                  width: 1,
-                ),
-                borderRadius: BorderRadius.circular(50)),
-            onPressed: () {
-              print("the pass is" + _userNameController.text);
-            },
-            child: new Padding(
-              padding: new EdgeInsets.all(10.0),
-              child: new Text(
-                '马上登录',
-                style:
-                new TextStyle(color: Colors.white, fontSize: 16.0),
-              ),
-            )
-        )
-
-    );
-  }
-
-
-  /*
-  注册和找回密码
- */
-  Widget findPassAndRegister(){
-    return new Container(
-        width: 200.0,
-        margin: EdgeInsets.fromLTRB(30.0, 30.0, 30.0, 20.0),
-        //padding: EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 0.0),
-        child: new Row(
-            children: <Widget>[
-              new Expanded(
-                child: new Text('账号注册',
-                  textAlign: TextAlign.center,
-                  style: new TextStyle(
-                    fontSize: 16.0,
-                    color: Colours.dark_text_gray,
-                  ),
-                ),
-              ),
-              new Text('|',
-                textAlign: TextAlign.center,
-                style: new TextStyle(
-                  fontSize: 16.0,
-                  color: Colours.dark_text_gray,
-                ),
-              ),
-              new Expanded(
-                child: new Text('密码登陆',
-                  textAlign: TextAlign.center,
-                  style: new TextStyle(
-                    fontSize: 16.0,
-                    color: Colours.dark_text_gray,
-                  ),
-                ),
-              ),
-            ])
-
     );
   }
 }

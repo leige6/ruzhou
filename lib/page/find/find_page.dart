@@ -14,7 +14,7 @@ import 'package:ruzhou/router/find_router.dart';
 import 'package:ruzhou/router/fluro_navigator.dart';
 import 'package:ruzhou/utils/image_utils.dart';
 import 'package:ruzhou/utils/utils.dart';
-import 'package:ruzhou/widgets/my_text_filed.dart';
+import 'package:ruzhou/widgets/find_my_text_filed.dart';
 
 class FindPage extends StatefulWidget {
   @override
@@ -63,7 +63,7 @@ class _FindPageState extends State<FindPage> with AutomaticKeepAliveClientMixin{
       child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            MyTextField(
+            FindMyTextField(
               focusNode: _nodeText1,
               controller: _textController,
               config: Utils.getKeyboardActionsConfig(context, [_nodeText1]),
