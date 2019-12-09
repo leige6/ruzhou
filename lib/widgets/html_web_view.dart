@@ -31,26 +31,20 @@ class _HtmlWebViewState extends State<HtmlWebView> {
 
   @override
   void initState() {
-    super.initState();
-    ///用_futureBuilderFuture来保存_gerData()的结果，以避免不必要的ui重绘:相关blog地址：https://blog.csdn.net/u011272795/article/details/83010974
-    _loadHtmlFromAssets();
-  }
-
-
-  void _loadHtmlFromAssets() async {
-    String res = await rootBundle.loadString(widget.webUrl);
-    setState(() {
-      _url=res;
-    });
+    super.initState(); ///用_futureBuilderFuture来保存_gerData()的结果，以避免不必要的ui重绘:相关blog地址：https://blog.csdn.net/u011272795/article/details/83010974
   }
 
   @override
   Widget build(BuildContext context) {
     if(widget.type==0){
-      webWidget = _url.isNotEmpty?new InAppWebView(
-          initialData: InAppWebViewInitialData(_url),
+      webWidget = new InAppWebView(
+          initialFile: widget.webUrl,
           initialHeaders: {},
-          initialOptions: {},
+          initialOptions: InAppWebViewWidgetOptions(
+              inAppWebViewOptions: InAppWebViewOptions(
+                debuggingEnabled: true,
+              )
+          ),
           onWebViewCreated: (InAppWebViewController controller) {
             webView = controller;
           },
@@ -63,23 +57,30 @@ class _HtmlWebViewState extends State<HtmlWebView> {
             setState(() {
               lineProgress = prog;
             });
-          }):
-      Container(
-        constraints: BoxConstraints.expand(
-          height: MediaQuery.of(context).size.height,
-        ),
-        color: Colors.white,
-      );
+          });
     }else{
       webWidget = new InAppWebView(
           initialUrl: widget.webUrl,
           initialHeaders: {},
-          initialOptions: {},
+          initialOptions: InAppWebViewWidgetOptions(
+              inAppWebViewOptions: InAppWebViewOptions(
+                useShouldOverrideUrlLoading:true,
+                debuggingEnabled: true,
+              )
+          ),
           onWebViewCreated: (InAppWebViewController controller) {
             webView = controller;
           },
           onLoadStart: (InAppWebViewController controller, String url) {
             print("started -------------- $url");
+            print(url.startsWith("http:"));
+            print(url.startsWith("https:"));
+          },
+          shouldOverrideUrlLoading: (InAppWebViewController controller, String url) {
+            print("override $url");
+            if (!url.startsWith("http")) {
+              controller.stopLoading();
+            }
           },
           onProgressChanged: (InAppWebViewController controller, int progress) {
             double prog = progress / 100;
