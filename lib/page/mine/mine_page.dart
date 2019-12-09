@@ -47,32 +47,37 @@ class _MinePageState extends State<MinePage>  with AutomaticKeepAliveClientMixin
                             ),
                             child: new Column(
                               children: <Widget>[
-                                Row(
-                                    children: <Widget>[
-                                      CircleAvatar(
-                                          radius: 40.0,
-                                          backgroundColor: Colours.user_head_bg,
-                                          backgroundImage: ImageUtils.getImageProvider(provider.user?.avatarUrl, holderImg: 'user_head')
-                                      ),
-                                      new Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                GestureDetector(
+                                    onTap: () {
+                                      NavigatorUtils.push(context,MineRouter.login);
+                                    },
+                                    child:Row(
                                         children: <Widget>[
-                                          Container(
-                                            padding:EdgeInsets.only(
-                                              left: ScreenUtil.getInstance().setWidth(15.0),
-                                              bottom: ScreenUtil.getInstance().setHeight(18.0),
-                                            ),
-                                            child:new Text("登录/注册",style: new TextStyle(fontSize: 18,fontWeight:FontWeight.bold,color: Colours.second_text),),
+                                          CircleAvatar(
+                                              radius: 40.0,
+                                              backgroundColor: Colours.user_head_bg,
+                                              backgroundImage: ImageUtils.getImageProvider(provider.user?.avatarUrl, holderImg: 'user_head')
                                           ),
-                                          Container(
-                                            padding:EdgeInsets.only(
-                                              left: ScreenUtil.getInstance().setWidth(15.0),
-                                            ),
-                                            child:new Text("点击登陆 赚积分兑大礼",style: new TextStyle(fontSize: 15,color: Colours.second_text),),
-                                          ),
-                                        ],
-                                      )
-                                    ]),
+                                          Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: <Widget>[
+                                              Container(
+                                                padding:EdgeInsets.only(
+                                                  left: ScreenUtil.getInstance().setWidth(15.0),
+                                                  bottom: ScreenUtil.getInstance().setHeight(18.0),
+                                                ),
+                                                child:new Text("登录/注册",style: new TextStyle(fontSize: 18,fontWeight:FontWeight.bold,color: Colours.second_text),),
+                                              ),
+                                              Container(
+                                                padding:EdgeInsets.only(
+                                                  left: ScreenUtil.getInstance().setWidth(15.0),
+                                                ),
+                                                child:new Text("点击登陆 赚积分兑大礼",style: new TextStyle(fontSize: 15,color: Colours.second_text),),
+                                              ),
+                                            ],
+                                          )
+                                        ]),
+                                ),
                               ],
                             )
                         );

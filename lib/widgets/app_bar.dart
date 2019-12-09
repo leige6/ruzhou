@@ -57,7 +57,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget{
                     child: Text(
                         title.isEmpty ? centerTitle : title,
                         style: TextStyle(
-                          fontSize: Dimens.font_sp18,
+                          fontSize: Dimens.font_sp20,
                           color: Colours.material_bg ,
                         )
                     ),
@@ -97,5 +97,5 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget{
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(48.0);
+  Size get preferredSize => Size.fromHeight(58.0);
 }
