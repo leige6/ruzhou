@@ -53,11 +53,11 @@ class _MinePageState extends State<MinePage>  with AutomaticKeepAliveClientMixin
                                     },
                                     child:Row(
                                         children: <Widget>[
-                                          CircleAvatar(
+                                          provider.user!=null?CircleAvatar(
                                               radius: 40.0,
                                               backgroundColor: Colours.user_head_bg,
-                                              backgroundImage: ImageUtils.getImageProvider(provider.user?.avatarUrl, holderImg: 'user_head')
-                                          ),
+                                              backgroundImage: ImageUtils.getImageProvider(provider.user?.avatarUrl),
+                                          ):Icon(IconData(0xe632,fontFamily: 'MyIcons'),size: ScreenUtil.getInstance().setWidth(130.0),color: Colours.unselected_item_color,),
                                           Column(
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: <Widget>[
@@ -66,13 +66,13 @@ class _MinePageState extends State<MinePage>  with AutomaticKeepAliveClientMixin
                                                   left: ScreenUtil.getInstance().setWidth(15.0),
                                                   bottom: ScreenUtil.getInstance().setHeight(18.0),
                                                 ),
-                                                child:new Text("登录/注册",style: new TextStyle(fontSize: 18,fontWeight:FontWeight.bold,color: Colours.second_text),),
+                                                child:new Text("登录/注册",style: new TextStyle(fontSize: ScreenUtil.getInstance().setSp(36),fontWeight:FontWeight.bold,color: Colours.second_text),),
                                               ),
                                               Container(
                                                 padding:EdgeInsets.only(
                                                   left: ScreenUtil.getInstance().setWidth(15.0),
                                                 ),
-                                                child:new Text("点击登陆 赚积分兑大礼",style: new TextStyle(fontSize: 15,color: Colours.second_text),),
+                                                child:new Text("点击登陆 赚积分兑大礼",style: new TextStyle(fontSize: ScreenUtil.getInstance().setSp(28),color: Colours.second_text),),
                                               ),
                                             ],
                                           )
@@ -98,9 +98,9 @@ class _MinePageState extends State<MinePage>  with AutomaticKeepAliveClientMixin
                                 padding:EdgeInsets.only(
                                   bottom: ScreenUtil.getInstance().setHeight(10.0),
                                 ),
-                                child: LoadAssetImage("message", width: 30.0, color: Colours.text_gray,),
+                                child: Icon(IconData(0xe657,fontFamily: 'MyIcons'),size: 30,color: Colours.text_gray,)
                               ),
-                              Text("消息",style: new TextStyle(fontSize: 14,color: Colours.mine_icon_text),)
+                              Text("消息",style: new TextStyle(fontSize: ScreenUtil.getInstance().setSp(26),color: Colours.mine_icon_text),)
                             ],
                           ),
                           new Column(
@@ -109,9 +109,9 @@ class _MinePageState extends State<MinePage>  with AutomaticKeepAliveClientMixin
                                 padding:EdgeInsets.only(
                                   bottom: ScreenUtil.getInstance().setHeight(10.0),
                                 ),
-                                child: LoadAssetImage("personal_letter", width: 30.0, color: Colours.text_gray,),
+                                child: Icon(IconData(0xe788,fontFamily: 'MyIcons'),size: 30,color: Colours.text_gray,)
                               ),
-                              Text("私信",style: new TextStyle(fontSize: 14,color: Colours.mine_icon_text),)
+                              Text("私信",style: new TextStyle(fontSize: ScreenUtil.getInstance().setSp(26),color: Colours.mine_icon_text),)
                             ],
                           ),
                           new Column(
@@ -120,9 +120,9 @@ class _MinePageState extends State<MinePage>  with AutomaticKeepAliveClientMixin
                                 padding:EdgeInsets.only(
                                   bottom: ScreenUtil.getInstance().setHeight(10.0),
                                 ),
-                                child: LoadAssetImage("collect", width: 30.0, color: Colours.text_gray,),
+                                child: Icon(IconData(0xe609,fontFamily: 'MyIcons'),size: 30,color: Colours.text_gray,)
                               ),
-                              Text("收藏",style: new TextStyle(fontSize: 14,color: Colours.mine_icon_text),)
+                              Text("收藏",style: new TextStyle(fontSize: ScreenUtil.getInstance().setSp(26),color: Colours.mine_icon_text),)
                             ],
                           )
                         ],

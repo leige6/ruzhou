@@ -33,16 +33,16 @@ class _RuZhouMainViewState extends State<RuZhouMainView> {
     if (_listNav == null){
       var _tabImages = [
         [
-          const LoadAssetImage("nav/home_icon", width: 25.0, color: Colours.unselected_item_color,),
-          const LoadAssetImage("nav/home_icon", width: 25.0, color: Colours.app_main,),
+          Icon(IconData(0xe619,fontFamily: 'MyIcons'),size: 25,color: Colours.unselected_item_color,),
+          Icon(IconData(0xe619,fontFamily: 'MyIcons'),size: 25,color: Colours.app_main,),
         ],
         [
-          const LoadAssetImage("nav/find_icon", width: 25.0, color: Colours.unselected_item_color,),
-          const LoadAssetImage("nav/find_icon", width: 25.0, color: Colours.app_main,),
+          Icon(IconData(0xe6c0,fontFamily: 'MyIcons'),size: 25,color: Colours.unselected_item_color,),
+          Icon(IconData(0xe6c0,fontFamily: 'MyIcons'),size: 25,color: Colours.app_main,),
         ],
         [
-          const LoadAssetImage("nav/mine_icon", width: 25.0, color: Colours.unselected_item_color,),
-          const LoadAssetImage("nav/mine_icon", width: 25.0, color: Colours.app_main,),
+          Icon(IconData(0xe61f,fontFamily: 'MyIcons'),size: 25,color: Colours.unselected_item_color,),
+          Icon(IconData(0xe61f,fontFamily: 'MyIcons'),size: 25,color: Colours.app_main,),
         ],
       ];
       _listNav = List.generate(3, (i){
