@@ -5,12 +5,13 @@ import 'package:flutter_inappbrowser/flutter_inappbrowser.dart';
 import 'package:ruzhou/constant/colours.dart';
 import 'package:ruzhou/router/fluro_navigator.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:ruzhou/utils/MyInAppBrowser.dart';
 
 import 'load_image.dart';
 
 
 class HtmlWebView extends StatefulWidget {
-
+  final ChromeSafariBrowser browser = new MyChromeSafariBrowser(new MyInAppBrowser());
   int type;//0:本地页面；1：http页面
   String webUrl;
   String title;
@@ -32,6 +33,15 @@ class _HtmlWebViewState extends State<HtmlWebView> {
   @override
   void initState() {
     super.initState(); ///用_futureBuilderFuture来保存_gerData()的结果，以避免不必要的ui重绘:相关blog地址：https://blog.csdn.net/u011272795/article/details/83010974
+  }
+
+
+  Future  _openBrowser(String url) async{
+    await widget.browser.open(
+        url: "$url",
+        options: ChromeSafariBrowserClassOptions(
+            androidChromeCustomTabsOptions: AndroidChromeCustomTabsOptions(addShareButton: false),
+            iosSafariOptions: IosSafariOptions(barCollapsingEnabled: true)));
   }
 
   @override
@@ -80,6 +90,8 @@ class _HtmlWebViewState extends State<HtmlWebView> {
             print("override $url");
             if (!url.startsWith("http")) {
               controller.stopLoading();
+            }else{
+              this._openBrowser(url);
             }
           },
           onProgressChanged: (InAppWebViewController controller, int progress) {
