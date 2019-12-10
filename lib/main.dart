@@ -4,9 +4,12 @@ import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:provider/provider.dart';
 import 'package:ruzhou/model/store.dart';
 import 'package:ruzhou/router/application.dart';
 import 'package:ruzhou/router/routers.dart';
+
+import 'model/theme_provider.dart';
 
 void main() {
   runApp(RuZhouApp());
@@ -29,22 +32,25 @@ class RuZhouApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return  Store.init(
         context: context, //以这个为准
-        child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          //title: 'Flutter Demo',
-          onGenerateRoute: Application.router.generator,
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-          ),
-          localizationsDelegates: [                             //此处
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-          ],
-          supportedLocales: [                                   //此处
-            const Locale('zh','CH'),
-            const Locale('en','US'),
-          ],
-        )
+        child: Consumer<ThemeProvider>(
+            builder: (_, provider, __) {
+              return  MaterialApp(
+                debugShowCheckedModeBanner: false,
+                //title: 'Flutter Demo',
+                onGenerateRoute: Application.router.generator,
+                theme: provider.getTheme(),
+                darkTheme: provider.getTheme(isDarkMode: true),
+                localizationsDelegates: [                             //此处
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalWidgetsLocalizations.delegate,
+                ],
+                supportedLocales: [                                   //此处
+                  const Locale('zh','CH'),
+                  const Locale('en','US'),
+                ],
+              );
+            }
+        ),
     );
   }
 }

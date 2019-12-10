@@ -137,23 +137,15 @@ class _MyTextFieldState extends State<MyTextField> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             _isShowDelete ? Gaps.empty : GestureDetector(
-              child: LoadAssetImage("login/qyg_shop_icon_delete",
-                key: Key('${widget.keyName}_delete'),
-                width: 18.0,
-                height: 18.0,
-              ),
+              child: Icon(IconData(0xe635,fontFamily: 'MyIcons'), key: Key('${widget.keyName}_delete'),size: 22,color: Colours.mine_icon_text,),
               onTap: (){
                 widget.controller.text = "";
               },
             ),
             !widget.isInputPwd ? Gaps.empty : Gaps.hGap15,
             !widget.isInputPwd ? Gaps.empty : GestureDetector(
-              child: LoadAssetImage(
-                _isShowPwd ? "login/qyg_shop_icon_display" : "login/qyg_shop_icon_hide",
-                key: Key('${widget.keyName}_showPwd'),
-                width: 18.0,
-                height: 18.0,
-              ),
+              child:_isShowPwd ?Icon(IconData(0xe648,fontFamily: 'MyIcons'), key: Key('${widget.keyName}_showPwd'),size: 22,color: Colours.mine_icon_text,):
+                Icon(IconData(0xe634,fontFamily: 'MyIcons'), key: Key('${widget.keyName}_showPwd'),size: 22,color: Colours.mine_icon_text,),
               onTap: (){
                 setState(() {
                   _isShowPwd = !_isShowPwd;

@@ -1,6 +1,7 @@
 
 import 'package:provider/provider.dart' show ChangeNotifierProvider, MultiProvider, Consumer, Provider;
 import 'package:ruzhou/model/select_images_model.dart';
+import 'package:ruzhou/model/theme_provider.dart';
 import 'package:ruzhou/model/user_info_model.dart';
 
 class Store {
@@ -9,7 +10,8 @@ class Store {
         return MultiProvider(
             providers: [
                 ChangeNotifierProvider<UserInfoModel>.value(value: UserInfoModel()),
-                ChangeNotifierProvider<SelectImagesModel>.value(value: SelectImagesModel())
+                ChangeNotifierProvider<SelectImagesModel>.value(value: SelectImagesModel()),
+                ChangeNotifierProvider<ThemeProvider>.value(value: ThemeProvider())
             ],
             child: child,
             );

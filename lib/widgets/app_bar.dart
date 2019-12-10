@@ -34,7 +34,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget{
     Color _backgroundColor;
 
     if (backgroundColor == null){
-      _backgroundColor = Theme.of(context).scaffoldBackgroundColor;
+      _backgroundColor = Theme.of(context).appBarTheme.color;
     }else{
       _backgroundColor = backgroundColor;
     }

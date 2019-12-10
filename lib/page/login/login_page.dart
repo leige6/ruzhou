@@ -65,10 +65,14 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: MyAppBar(
-          isBack: false,
+          isBack: true,
+          centerTitle: '密码登录',
           actionName: '验证码登录',
           onPressed: (){
             //NavigatorUtils.push(context, LoginRouter.smsLoginPage);
+          },
+          onBack: (){
+            NavigatorUtils.goBack(context);
           },
         ),
         body: defaultTargetPlatform == TargetPlatform.iOS ? FormKeyboardActions(
