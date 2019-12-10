@@ -129,11 +129,11 @@ class _SMSLoginPageState extends State<SMSLoginPage> {
             alignment: Alignment.centerRight,
             child: GestureDetector(
               child: Text(
-                '忘记密码',
+                '密码登录',
                 style: Theme.of(context).textTheme.subtitle,
               ),
               onTap: (){
-                NavigatorUtils.push(context, LoginRouter.resetPasswordPage);
+                NavigatorUtils.push(context, LoginRouter.login);
               },
             ),
           )
