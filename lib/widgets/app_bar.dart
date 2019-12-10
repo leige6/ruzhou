@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:ruzhou/constant/colours.dart';
 import 'package:ruzhou/constant/dimens.dart';
 import 'package:ruzhou/constant/gaps.dart';
+import 'package:ruzhou/router/fluro_navigator.dart';
 
 /// 自定义AppBar
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget{
@@ -15,7 +16,6 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget{
     this.centerTitle: "",
     this.actionName: "",
     this.backImg: "",
-    this.onBack,
     this.onPressed,
     this.isBack: true
   }): super(key: key);
@@ -25,7 +25,6 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget{
   final String centerTitle;
   final String backImg;
   final String actionName;
-  final VoidCallback onBack;
   final VoidCallback onPressed;
   final bool isBack;
 
@@ -66,7 +65,9 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget{
                 ],
               ),
               isBack ? IconButton(
-                onPressed: onBack,
+                onPressed:(){
+                  NavigatorUtils.goBack(context);
+                },
                 tooltip: 'Back',
                 padding: const EdgeInsets.all(12.0),
                 icon: Icon(Icons.arrow_back_ios,color:  _overlayStyle == SystemUiOverlayStyle.light ? Colours.material_bg : Colours.text,),

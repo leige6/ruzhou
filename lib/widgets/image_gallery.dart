@@ -55,9 +55,6 @@ class _ImageGalleryState extends State<ImageGallery>{
           backgroundColor:Colours.app_main,
           centerTitle: '${currentIndex+1} / ${length}',
           actionName:'删除',
-          onBack: (){
-            NavigatorUtils.goBack(context);
-          },
           onPressed:() {
             if(length-1==0){
               NavigatorUtils.goBack(context);

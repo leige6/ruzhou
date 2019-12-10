@@ -72,9 +72,6 @@ class _LoginPageState extends State<LoginPage> {
           onPressed: (){
             NavigatorUtils.push(context, LoginRouter.smsLoginPage);
           },
-          onBack: (){
-            NavigatorUtils.goBack(context);
-          },
         ),
         body: defaultTargetPlatform == TargetPlatform.iOS ? FormKeyboardActions(
           child: _buildBody(),
@@ -130,7 +127,7 @@ class _LoginPageState extends State<LoginPage> {
                 style: Theme.of(context).textTheme.subtitle,
               ),
               onTap: (){
-                //NavigatorUtils.push(context, LoginRouter.resetPasswordPage);
+                NavigatorUtils.push(context, LoginRouter.resetPasswordPage);
               },
             ),
           ),
@@ -145,7 +142,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 onTap: (){
-                  //NavigatorUtils.push(context, LoginRouter.registerPage);
+                  NavigatorUtils.push(context, LoginRouter.registerPage);
                 },
               )
           )
