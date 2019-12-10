@@ -8,9 +8,9 @@ import 'package:ruzhou/constant/gaps.dart';
 import 'package:ruzhou/constant/styles.dart';
 import 'package:ruzhou/router/fluro_navigator.dart';
 import 'package:ruzhou/router/login_router.dart';
+import 'package:ruzhou/router/mine_router.dart';
 import 'package:ruzhou/utils/utils.dart';
 import 'package:ruzhou/widgets/app_bar.dart';
-import 'package:ruzhou/widgets/find_my_text_filed.dart';
 import 'package:ruzhou/widgets/my_button.dart';
 import 'package:ruzhou/widgets/my_text_filed.dart';
 
@@ -25,8 +25,10 @@ class _LoginPageState extends State<LoginPage> {
   //定义一个controller
   TextEditingController _nameController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
+  TextEditingController _identifyCodeController = TextEditingController();
   final FocusNode _nodeText1 = FocusNode();
   final FocusNode _nodeText2 = FocusNode();
+  final FocusNode _nodeText3 = FocusNode();
   bool _isClick = false;
 
   @override
@@ -35,12 +37,14 @@ class _LoginPageState extends State<LoginPage> {
     //监听输入改变
     _nameController.addListener(_verify);
     _passwordController.addListener(_verify);
+    _identifyCodeController.addListener(_verify);
     _nameController.text = FlutterStars.SpUtil.getString(Constant.phone);
   }
 
   void _verify(){
     String name = _nameController.text;
     String password = _passwordController.text;
+    String identifyCode = _identifyCodeController.text;
     bool isClick = true;
     if (name.isEmpty || name.length < 11) {
       isClick = false;
@@ -48,7 +52,9 @@ class _LoginPageState extends State<LoginPage> {
     if (password.isEmpty || password.length < 6) {
       isClick = false;
     }
-
+    if (identifyCode.isEmpty || identifyCode.length < 4) {
+      isClick = false;
+    }
     /// 状态不一样在刷新，避免重复不必要的setState
     if (isClick != _isClick){
       setState(() {
@@ -59,7 +65,7 @@ class _LoginPageState extends State<LoginPage> {
 
   void _login(){
     FlutterStars.SpUtil.putString(Constant.phone, _nameController.text);
-    //NavigatorUtils.push(context, StoreRouter.auditPage);
+    NavigatorUtils.push(context, MineRouter.minePage);
   }
 
   @override
@@ -110,6 +116,17 @@ class _LoginPageState extends State<LoginPage> {
             controller: _passwordController,
             maxLength: 16,
             hintText: "请输入密码",
+          ),
+          Gaps.vGap8,
+          MyTextField(
+            key: const Key('identifyCode'),
+            keyName: 'identifyCode',
+            focusNode: _nodeText3,
+            config: Utils.getKeyboardActionsConfig(context, [_nodeText1, _nodeText2,_nodeText3]),
+            isShowCode: true,
+            controller: _identifyCodeController,
+            maxLength: 4,
+            hintText: "请输入验证码",
           ),
           Gaps.vGap10,
           Gaps.vGap15,

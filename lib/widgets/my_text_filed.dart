@@ -7,9 +7,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
+import 'package:ruzhou/api/api.dart';
 import 'package:ruzhou/constant/colours.dart';
 import 'package:ruzhou/constant/dimens.dart';
 import 'package:ruzhou/constant/gaps.dart';
+import 'package:ruzhou/utils/image_utils.dart';
+import 'package:ruzhou/utils/utils.dart';
 import 'package:rxdart/rxdart.dart';
 
 import 'load_image.dart';
@@ -26,6 +29,7 @@ class MyTextField extends StatefulWidget {
     this.focusNode,
     this.isInputPwd: false,
     this.getVCode,
+    this.isShowCode:false,
     this.config,
     this.keyName
   }): super(key: key);
@@ -38,6 +42,7 @@ class MyTextField extends StatefulWidget {
   final FocusNode focusNode;
   final bool isInputPwd;
   final Future<bool> Function() getVCode;
+  final bool isShowCode; //展示验证码
   final KeyboardActionsConfig config;
   /// 用于集成测试寻找widget
   final String keyName;
@@ -55,10 +60,12 @@ class _MyTextFieldState extends State<MyTextField> {
   /// 当前秒数
   int s;
   StreamSubscription _subscription;
+  String identifyCodeUrl=Api.REFRESH_CODE;
 
   @override
   void initState() {
     super.initState();
+    identifyCodeUrl=identifyCodeUrl+Utils.generateUUID();
     /// 获取初始化值
     _isShowDelete = widget.controller.text.isEmpty;
     /// 监听输入改变
@@ -181,7 +188,27 @@ class _MyTextFieldState extends State<MyTextField> {
                   style: TextStyle(fontSize: Dimens.font_sp12),
                 ),
               ),
-            )
+            ),
+            widget.isShowCode?  Gaps.hGap15: Gaps.empty ,
+            widget.isShowCode?  GestureDetector(
+              child: Container(
+                width: 100,
+                height: 50,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color:Colours.select_image_bg,
+                  image:DecorationImage(
+                      image: ImageUtils.getImageProvider(identifyCodeUrl) ,
+                      fit: BoxFit.none
+                  ),
+                ),
+              ),
+              onTap: (){
+                setState(() {
+                  identifyCodeUrl=identifyCodeUrl+Utils.generateUUID();
+                });
+              },
+            ):Gaps.empty,
           ],
         )
       ],
