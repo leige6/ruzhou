@@ -9,13 +9,11 @@ class MineRouter implements IRouterProvider{
 
   static String minePage = "/mine";
   static String serviceAgeree = "/mine/serviceAgeree";
-  static String login = "/login";
 
   @override
   void initRouter(Router router) {
     router.define(minePage, handler: Handler(handlerFunc: (_, params) => MinePage()));
     router.define(serviceAgeree, handler: Handler(handlerFunc: (_, params) => ServiceAgreePage()));
-    router.define(login, handler: Handler(handlerFunc: (_, params) => LoginPage()));
   }
 
 }

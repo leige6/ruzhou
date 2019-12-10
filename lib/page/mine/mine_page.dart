@@ -7,8 +7,10 @@ import 'package:ruzhou/constant/colours.dart';
 import 'package:ruzhou/model/user_info_model.dart';
 import 'package:ruzhou/router/find_router.dart';
 import 'package:ruzhou/router/fluro_navigator.dart';
+import 'package:ruzhou/router/login_router.dart';
 import 'package:ruzhou/router/mine_router.dart';
 import 'package:ruzhou/utils/image_utils.dart';
+import 'package:ruzhou/widgets/app_bar.dart';
 import 'package:ruzhou/widgets/load_image.dart';
 import 'package:ruzhou/widgets/water_mark.dart';
 
@@ -26,10 +28,9 @@ class _MinePageState extends State<MinePage>  with AutomaticKeepAliveClientMixin
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
-        appBar: new AppBar(
-          backgroundColor:Colours.app_main,
-          centerTitle:true,
-          title: new Text('我的'),
+        appBar: MyAppBar(
+          isBack: false,
+          centerTitle: '我的',
         ),
         body: Container(
               color: Colours.material_bg,
@@ -49,7 +50,7 @@ class _MinePageState extends State<MinePage>  with AutomaticKeepAliveClientMixin
                               children: <Widget>[
                                 GestureDetector(
                                     onTap: () {
-                                      NavigatorUtils.push(context,MineRouter.login);
+                                      NavigatorUtils.push(context,LoginRouter.login);
                                     },
                                     child:Row(
                                         children: <Widget>[

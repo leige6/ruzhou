@@ -14,7 +14,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget{
     this.title: "",
     this.centerTitle: "",
     this.actionName: "",
-    this.backImg: "assets/image/ic_back_black.png",
+    this.backImg: "",
     this.onBack,
     this.onPressed,
     this.isBack: true
@@ -97,5 +97,5 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget{
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(58.0);
+  Size get preferredSize => Size.fromHeight(48.0);
 }

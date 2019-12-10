@@ -7,6 +7,7 @@ import 'package:flustars/flustars.dart' as FlutterStars;
 import 'package:ruzhou/constant/gaps.dart';
 import 'package:ruzhou/constant/styles.dart';
 import 'package:ruzhou/router/fluro_navigator.dart';
+import 'package:ruzhou/router/login_router.dart';
 import 'package:ruzhou/utils/utils.dart';
 import 'package:ruzhou/widgets/app_bar.dart';
 import 'package:ruzhou/widgets/find_my_text_filed.dart';
@@ -69,7 +70,7 @@ class _LoginPageState extends State<LoginPage> {
           centerTitle: '密码登录',
           actionName: '验证码登录',
           onPressed: (){
-            //NavigatorUtils.push(context, LoginRouter.smsLoginPage);
+            NavigatorUtils.push(context, LoginRouter.smsLoginPage);
           },
           onBack: (){
             NavigatorUtils.goBack(context);
@@ -107,7 +108,7 @@ class _LoginPageState extends State<LoginPage> {
             key: const Key('password'),
             keyName: 'password',
             focusNode: _nodeText2,
-            config: Utils.getKeyboardActions(context, [_nodeText1, _nodeText2]),
+            config: Utils.getKeyboardActionsConfig(context, [_nodeText1, _nodeText2]),
             isInputPwd: true,
             controller: _passwordController,
             maxLength: 16,

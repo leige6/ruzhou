@@ -14,6 +14,7 @@ import 'package:ruzhou/router/find_router.dart';
 import 'package:ruzhou/router/fluro_navigator.dart';
 import 'package:ruzhou/utils/image_utils.dart';
 import 'package:ruzhou/utils/utils.dart';
+import 'package:ruzhou/widgets/app_bar.dart';
 import 'package:ruzhou/widgets/find_my_text_filed.dart';
 
 class FindPage extends StatefulWidget {
@@ -35,10 +36,9 @@ class _FindPageState extends State<FindPage> with AutomaticKeepAliveClientMixin{
     // TODO: implement build
     return Scaffold(
       key: _scaffoldKey,
-      appBar: new AppBar(
-        backgroundColor:Colours.app_main,
-        centerTitle:true,
-        title: new Text('发现'),
+      appBar: MyAppBar(
+        isBack: false,
+        centerTitle: '发现',
       ),
       body:defaultTargetPlatform == TargetPlatform.iOS ?FormKeyboardActions(
         child: _buildBody(),

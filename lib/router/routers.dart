@@ -1,15 +1,14 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
-import 'package:ruzhou/page/home/home_page.dart';
 import 'package:ruzhou/page/ruzhou.dart';
 import 'package:ruzhou/router/router_init.dart';
 import 'package:ruzhou/widgets/html_web_view.dart';
-import 'package:ruzhou/widgets/webview_page.dart';
 
 import '404.dart';
 import 'find_router.dart';
 import 'fluro_convert_util.dart';
 import 'home_router.dart';
+import 'login_router.dart';
 import 'mine_router.dart';
 
 class Routers {
@@ -37,6 +36,7 @@ class Routers {
     _listRouter.add(HomeRouter());
     _listRouter.add(FindRouter());
     _listRouter.add(MineRouter());
+    _listRouter.add(LoginRouter());
 
     /// 初始化路由
     _listRouter.forEach((routerProvider){
