@@ -201,7 +201,7 @@ class _MyTextFieldState extends State<MyTextField> {
                 height: 45,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  color:Colours.select_image_bg,
+                  color:Colours.material_bg,
                   image:DecorationImage(
                       image: ImageUtils.getImageProvider(identifyCodeUrl+randomStr) ,
                       fit: BoxFit.none
