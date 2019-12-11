@@ -5,6 +5,7 @@ import 'package:ruzhou/utils/theme_utils.dart';
 import 'package:uuid/uuid.dart';
 
 class Utils {
+
   static KeyboardActionsConfig getKeyboardActionsConfig(BuildContext context, List<FocusNode> list){
     return KeyboardActionsConfig(
       keyboardActionsPlatform: KeyboardActionsPlatform.IOS,
@@ -21,7 +22,7 @@ class Utils {
   }
 
   static String generateUUID() {
-    var uuid = Uuid();
+    var uuid = Uuid().v1();
     return uuid.toString();
   }
 

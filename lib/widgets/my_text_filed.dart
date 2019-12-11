@@ -61,11 +61,16 @@ class _MyTextFieldState extends State<MyTextField> {
   int s;
   StreamSubscription _subscription;
   String identifyCodeUrl=Api.REFRESH_CODE;
+  String randomStr='';
 
   @override
   void initState() {
     super.initState();
-    identifyCodeUrl=identifyCodeUrl+Utils.generateUUID();
+    if(widget.isShowCode){
+      randomStr='';
+      randomStr=Utils.generateUUID();
+      print(randomStr);
+    }
     /// 获取初始化值
     _isShowDelete = widget.controller.text.isEmpty;
     /// 监听输入改变
@@ -192,20 +197,21 @@ class _MyTextFieldState extends State<MyTextField> {
             widget.isShowCode?  Gaps.hGap15: Gaps.empty ,
             widget.isShowCode?  GestureDetector(
               child: Container(
-                width: 100,
-                height: 50,
+                width: 105,
+                height: 45,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   color:Colours.select_image_bg,
                   image:DecorationImage(
-                      image: ImageUtils.getImageProvider(identifyCodeUrl) ,
+                      image: ImageUtils.getImageProvider(identifyCodeUrl+randomStr) ,
                       fit: BoxFit.none
                   ),
                 ),
               ),
               onTap: (){
                 setState(() {
-                  identifyCodeUrl=identifyCodeUrl+Utils.generateUUID();
+                  randomStr=Utils.generateUUID();
+                  print(randomStr);
                 });
               },
             ):Gaps.empty,
