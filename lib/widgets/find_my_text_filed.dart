@@ -26,8 +26,6 @@ class FindMyTextField extends StatefulWidget {
 }
 
 class _FindMyTextFieldState extends State<FindMyTextField> {
-
-
   @override
   void initState() {
     super.initState();

@@ -53,6 +53,7 @@ class _SMSLoginPageState extends State<SMSLoginPage> {
   }
 
   void _login(){
+    NavigatorUtils.goBack(context);
     Toast.show("去登录......");
   }
 
@@ -133,7 +134,7 @@ class _SMSLoginPageState extends State<SMSLoginPage> {
                 style: Theme.of(context).textTheme.subtitle,
               ),
               onTap: (){
-                NavigatorUtils.push(context, LoginRouter.login);
+                NavigatorUtils.push(context, LoginRouter.login,replace: true);
               },
             ),
           )

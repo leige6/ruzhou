@@ -4,7 +4,7 @@ import 'package:ruzhou/page/login/register_page.dart';
 import 'package:ruzhou/page/login/reset_password_page.dart';
 import 'package:ruzhou/page/login/sms_login_page.dart';
 import 'package:ruzhou/page/mine/mine_page.dart';
-import 'package:ruzhou/page/mine/service_agree_page.dart';
+import 'package:ruzhou/page/mine/user_share_page.dart';
 import 'package:ruzhou/router/router_init.dart';
 
 

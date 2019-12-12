@@ -6,6 +6,7 @@ import 'package:uuid/uuid.dart';
 
 class Utils {
 
+
   static KeyboardActionsConfig getKeyboardActionsConfig(BuildContext context, List<FocusNode> list){
     return KeyboardActionsConfig(
       keyboardActionsPlatform: KeyboardActionsPlatform.IOS,
@@ -40,4 +41,5 @@ class Utils {
         return meid;
     }
   }
+
 }

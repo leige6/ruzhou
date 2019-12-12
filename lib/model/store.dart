@@ -4,6 +4,8 @@ import 'package:ruzhou/model/select_images_model.dart';
 import 'package:ruzhou/model/theme_provider.dart';
 import 'package:ruzhou/model/user_info_model.dart';
 
+import 'login_provider.dart';
+
 class Store {
     static init({context, child}) {
         //多个Provider
@@ -11,7 +13,8 @@ class Store {
             providers: [
                 ChangeNotifierProvider<UserInfoModel>.value(value: UserInfoModel()),
                 ChangeNotifierProvider<SelectImagesModel>.value(value: SelectImagesModel()),
-                ChangeNotifierProvider<ThemeProvider>.value(value: ThemeProvider())
+                ChangeNotifierProvider<ThemeProvider>.value(value: ThemeProvider()),
+                ChangeNotifierProvider<LoginProvider>.value(value: LoginProvider())
             ],
             child: child,
             );

@@ -11,6 +11,9 @@ import 'package:ruzhou/api/api.dart';
 import 'package:ruzhou/constant/colours.dart';
 import 'package:ruzhou/constant/dimens.dart';
 import 'package:ruzhou/constant/gaps.dart';
+import 'package:ruzhou/event/code_randomstr_event.dart';
+import 'package:ruzhou/model/login_provider.dart';
+import 'package:ruzhou/model/store.dart';
 import 'package:ruzhou/utils/image_utils.dart';
 import 'package:ruzhou/utils/utils.dart';
 import 'package:rxdart/rxdart.dart';
@@ -61,16 +64,10 @@ class _MyTextFieldState extends State<MyTextField> {
   int s;
   StreamSubscription _subscription;
   String identifyCodeUrl=Api.REFRESH_CODE;
-  String randomStr='';
 
   @override
   void initState() {
     super.initState();
-    if(widget.isShowCode){
-      randomStr='';
-      randomStr=Utils.generateUUID();
-      print(randomStr);
-    }
     /// 获取初始化值
     _isShowDelete = widget.controller.text.isEmpty;
     /// 监听输入改变
@@ -195,26 +192,26 @@ class _MyTextFieldState extends State<MyTextField> {
               ),
             ),
             widget.isShowCode?  Gaps.hGap15: Gaps.empty ,
-            widget.isShowCode?  GestureDetector(
-              child: Container(
-                width: 105,
-                height: 45,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color:Colours.material_bg,
-                  image:DecorationImage(
-                      image: ImageUtils.getImageProvider(identifyCodeUrl+randomStr) ,
-                      fit: BoxFit.none
+            widget.isShowCode? Store.connect<LoginProvider>( builder: (ctx, loginProvider, child) {
+              String randomStr=loginProvider.randomStr;
+              return  GestureDetector(
+                child: Container(
+                  width: 105,
+                  height: 45,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color:Colours.material_bg,
+                    image:DecorationImage(
+                        image: ImageUtils.getImageProvider(identifyCodeUrl+randomStr) ,
+                        fit: BoxFit.none
+                    ),
                   ),
                 ),
-              ),
-              onTap: (){
-                setState(() {
-                  randomStr=Utils.generateUUID();
-                  print(randomStr);
-                });
-              },
-            ):Gaps.empty,
+                onTap: (){
+                  loginProvider.updateRandomStr();
+                },
+              );
+            }):Gaps.empty,
           ],
         )
       ],

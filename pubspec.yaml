@@ -56,6 +56,7 @@ dependencies:
   rxdart: ^0.22.4
   device_id: ^0.2.0
   uuid: ^2.0.4
+  encrypt: ^3.3.1
 
 dev_dependencies:
   flutter_test:

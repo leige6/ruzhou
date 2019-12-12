@@ -12,9 +12,15 @@ class Constant {
   static const String code = 'code';
   
   static const String keyGuide = 'keyGuide';
+  static const String userName = 'userName';
   static const String phone = 'phone';
   static const String accessToken = 'accessToken';
+  static const String tenantId = 'TENANT_ID';
+  static const String authorization = 'Authorization';
   static const String refreshToken = 'refreshToken';
+  static const String isToken = 'isToken';
+  static const String avatarUrl = 'avatarUrl';
+  static const String contentType = 'Content-Type';
 
   static const String theme = "AppTheme";
 
