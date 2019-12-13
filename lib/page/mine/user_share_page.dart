@@ -23,19 +23,26 @@ class UserSharePage extends StatefulWidget {
 }
 
 
-class _UserSharePageState extends State<UserSharePage> with AutomaticKeepAliveClientMixin{
+class _UserSharePageState extends State<UserSharePage>{
   int total= 9;
   List<GalleryImageEntity> galleryImageEntitys;
   int length=0;
-  static final TextEditingController _textController = TextEditingController();
-  final FocusNode _nodeText1 = FocusNode();
+  TextEditingController _textController;
+  FocusNode _nodeText1;
+
+  @override
+  void initState() {
+    super.initState();
+    _textController = TextEditingController();
+    _nodeText1 = FocusNode();
+  }
+
   @override
   Widget build(BuildContext context) {
-    super.build(context);
-    final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+    final GlobalKey<ScaffoldState> _userSharescaffoldKey = GlobalKey<ScaffoldState>();
     // TODO: implement build
     return Scaffold(
-        key: _scaffoldKey,
+        key: _userSharescaffoldKey,
         appBar: MyAppBar(
           isBack: true,
           centerTitle: '分享',
@@ -164,49 +171,13 @@ class _UserSharePageState extends State<UserSharePage> with AutomaticKeepAliveCl
               ],
             ),
           );
-
-
         }
     );
   }
 
-  /*void _jumpToGallery(inde, list) {
-    String listJson = jsonEncode(list);
-    print('---------------图片json----------------------'+listJson);
-    NavigatorUtils.pushResult(context,FindRouter.imageGalleryPage + "?index=$inde&photoList=${Uri.encodeComponent(listJson)}",Feedback);
-  }*/
-
   void _jumpToGallery() {
     NavigatorUtils.push(context,FindRouter.imageGalleryPage);
   }
-
-  /*void  Feedback(result){
-    if(result!=null){
-      String listJson = jsonEncode(result);
-      print('---------------回调json----------------------'+listJson);
-     if(!mounted){
-        return;
-      }
-      setState(() {
-        images.clear();
-        list=result;
-        for(int i=0;i<result.length;i++){
-          GalleryImageEntity entity=result[i];
-          SelectdImagesEntity selectEntity=new SelectdImagesEntity(type: 'file',file: new File(entity.url));
-          images.add(selectEntity);
-        }
-        if(images.length<9){
-          SelectdImagesEntity selectEntity=new SelectdImagesEntity(type: 'icon');
-          images.add(selectEntity);
-        }
-      });
-    }
-  }*/
-
-  @override
-  // TODO: implement wantKeepAlive
-  bool get wantKeepAlive => true;
-
 
   @override
   void dispose() {
