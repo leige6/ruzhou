@@ -53,10 +53,6 @@ class _LoginPageState extends State<LoginPage> {
     _nameController.text = FlutterStars.SpUtil.getString(Constant.phone);
   }
 
-  @override //由于provider不能在initState中初始化，可能会报错，所以重写此方法
-  void didChangeDependencies() {
-
-  }
 
   void _verify(){
     String name = _nameController.text;
@@ -108,11 +104,13 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   _saveUserInfo() async {
-    await FlutterStars.SpUtil.putString(Constant.userName, _nameController.text);
+    bool res=await FlutterStars.SpUtil.putObject(Constant.user, userEntity);
+    print('用户信息放入文件存储结果：${res}');
+    /*await FlutterStars.SpUtil.putString(Constant.userName, _nameController.text);
     await FlutterStars.SpUtil.putString(Constant.accessToken, userEntity.accessToken);
     await FlutterStars.SpUtil.putString(Constant.refreshToken, userEntity.refreshToken);
     await FlutterStars.SpUtil.putString(Constant.userName, userEntity.username);
-    await FlutterStars.SpUtil.putString(Constant.avatarUrl, userEntity.avatarUrl);
+    await FlutterStars.SpUtil.putString(Constant.avatarUrl, userEntity.avatarUrl);*/
   }
 
   @override

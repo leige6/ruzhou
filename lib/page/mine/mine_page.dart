@@ -15,6 +15,7 @@ import 'package:ruzhou/utils/image_utils.dart';
 import 'package:ruzhou/widgets/app_bar.dart';
 
 
+
 class MinePage extends StatefulWidget {
   @override
   _MinePageState createState() => _MinePageState();
@@ -26,6 +27,11 @@ class _MinePageState extends State<MinePage>  with AutomaticKeepAliveClientMixin
   final TextStyle textStyle =
   TextStyle(fontSize: ScreenUtil.getInstance().setSp(30), fontWeight: FontWeight.w400);
 
+
+  @override
+  void initState() {
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -38,7 +44,9 @@ class _MinePageState extends State<MinePage>  with AutomaticKeepAliveClientMixin
               child: ListView(
                 children: <Widget>[
                   Store.connect<UserInfoModel>( builder: (ctx, userInfoModel, child) {
-                    user=userInfoModel.user;
+                    if(user==null){
+                      user=userInfoModel.user;
+                    }
                     return  Container(
                         color: Colours.material_bg,
                         padding:EdgeInsets.only(

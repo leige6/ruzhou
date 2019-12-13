@@ -3,11 +3,16 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 import 'package:ruzhou/constant/colours.dart';
+import 'package:ruzhou/constant/common.dart';
 import 'package:ruzhou/entity/tab_entity.dart';
+import 'package:ruzhou/entity/user_entity.dart';
+import 'package:ruzhou/model/user_info_model.dart';
 import 'package:ruzhou/widgets/app_bar.dart';
 import 'package:ruzhou/widgets/load_image.dart';
 import 'package:ruzhou/widgets/news_list_view.dart';
+
 
 
 class HomePage extends StatefulWidget {
@@ -48,6 +53,7 @@ class _HomePageState extends State<HomePage>  with TickerProviderStateMixin,Auto
   }
 
   Future  _loadData() async{
+
     //模拟网络请求
    return Future.delayed(Duration(milliseconds: 300)).then((_res) async {
         //此为加载结束
@@ -67,10 +73,14 @@ class _HomePageState extends State<HomePage>  with TickerProviderStateMixin,Auto
     });
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     //super.build(context)此句是为了防止BottomNavigationBar+PageView页面状态保持失效
     super.build(context);
+    ScreenUtil.instance = ScreenUtil(width: 750, height: 1334)..init(context);
+    print('-------------shouye1------------------');
     // TODO: implement build
     return Scaffold(
           appBar: MyAppBar(
@@ -96,6 +106,7 @@ class _HomePageState extends State<HomePage>  with TickerProviderStateMixin,Auto
           return _errorView;
         else    //若_calculation执行正常完成
           //initialIndex初始选中第几个
+          print('-------------shouye2------------------');
           controller = TabController(initialIndex: 1, length: tabBarList.length, vsync: this);
           return Container(
             //宽高都充满屏幕剩余空间

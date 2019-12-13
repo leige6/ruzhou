@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 import 'package:ruzhou/constant/colours.dart';
+import 'package:ruzhou/constant/common.dart';
 import 'package:ruzhou/constant/strings.dart';
+import 'package:ruzhou/entity/user_entity.dart';
+import 'package:ruzhou/model/user_info_model.dart';
 import 'package:ruzhou/widgets/load_image.dart';
 import 'find/find_page.dart';
 import 'home/home_page.dart';
 import 'mine/mine_page.dart';
+import 'package:flustars/flustars.dart' as FlutterStars;
+
+
 class RuZhouMainView extends StatefulWidget {
   @override
   _RuZhouMainViewState createState() => _RuZhouMainViewState();
@@ -68,11 +75,8 @@ class _RuZhouMainViewState extends State<RuZhouMainView> {
       _selectedIndex = index;
     });
   }
-
-
   @override
   Widget build(BuildContext context) {
-    ScreenUtil.instance = ScreenUtil(width: 750, height: 1334)..init(context);
     return Scaffold(
       body: SafeArea(
         top:false,

@@ -7,19 +7,6 @@ import 'package:ruzhou/model/user_info_model.dart';
 import 'login_provider.dart';
 
 class Store {
-    static init({context, child}) {
-        //多个Provider
-        return MultiProvider(
-            providers: [
-                ChangeNotifierProvider<UserInfoModel>.value(value: UserInfoModel()),
-                ChangeNotifierProvider<SelectImagesModel>.value(value: SelectImagesModel()),
-                ChangeNotifierProvider<ThemeProvider>.value(value: ThemeProvider()),
-                ChangeNotifierProvider<LoginProvider>.value(value: LoginProvider())
-            ],
-            child: child,
-            );
-    }
-
        //获取值 of(context)  这个会引起页面的整体刷新，如果全局是页面级别的
     static T value<T>(context) {
         return Provider.of<T>(context);

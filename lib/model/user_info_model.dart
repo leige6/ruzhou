@@ -5,6 +5,10 @@ class UserInfoModel with ChangeNotifier {
   UserEntity _user;
   UserEntity get user => _user;
 
+  UserInfoModel(UserEntity user){
+    _user = user;
+  }
+
   void setUser(UserEntity user) {
     _user = user;
     notifyListeners();
