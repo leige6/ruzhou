@@ -17,14 +17,14 @@ import 'model/theme_provider.dart';
 import 'model/user_info_model.dart';
 
 
-void main() async{
+ main() async {
+   if (Platform.isAndroid) {
+     SystemUiOverlayStyle systemUiOverlayStyle =
+     SystemUiOverlayStyle(statusBarColor: Colors.transparent);
+     SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
+   }
   await FlutterStars.SpUtil.getInstance();
   runApp(RuZhouApp());
- if (Platform.isAndroid) {
-    SystemUiOverlayStyle systemUiOverlayStyle =
-    SystemUiOverlayStyle(statusBarColor: Colors.transparent);
-    SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
-  }
 }
 
 class RuZhouApp extends StatelessWidget {
@@ -33,23 +33,7 @@ class RuZhouApp extends StatelessWidget {
     final router = Router();
     Routers.configureRoutes(router);
     Application.router = router;
-    //_initAsync();
   }
-
-  _initAsync() async {
-    /// App启动时读取Sp数据，需要异步等待Sp初始化完成。
-    await FlutterStars.SpUtil.getInstance();
-  }
-
-  /*_getUserInfo(context) async {
-    print('-------------user1------------------');
-    UserEntity us =await FlutterStars.SpUtil.getObj(Constant.user, (v) => UserEntity.fromJson(v));
-    if(us!=null){
-      Provider.of<UserInfoModel>(context).setUser(us);
-      print('-------------user2------------------');
-    }
-  }*/
-
   @override
   Widget build(BuildContext context) {
     UserEntity us =FlutterStars.SpUtil.getObj(Constant.user, (v) => UserEntity.fromJson(v));
