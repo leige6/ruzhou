@@ -39,10 +39,8 @@ class _UserSharePageState extends State<UserSharePage>{
 
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<ScaffoldState> _userSharescaffoldKey = GlobalKey<ScaffoldState>();
     // TODO: implement build
     return Scaffold(
-        key: _userSharescaffoldKey,
         appBar: MyAppBar(
           isBack: true,
           centerTitle: '分享',
