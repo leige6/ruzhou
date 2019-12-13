@@ -7,22 +7,21 @@ import 'package:ruzhou/router/fluro_navigator.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:ruzhou/utils/MyInAppBrowser.dart';
 
-import 'app_bar.dart';
 import 'load_image.dart';
 
 
-class HtmlWebView extends StatefulWidget {
+class HtmlWebView1 extends StatefulWidget {
   final ChromeSafariBrowser browser = new MyChromeSafariBrowser(new MyInAppBrowser());
   int type;//0:本地页面；1：http页面
   String webUrl;
   String title;
-  HtmlWebView({Key key,@required this.type=0, this.webUrl, @required this.title}) : super(key: key);
+  HtmlWebView1({Key key,@required this.type=0, this.webUrl, @required this.title}) : super(key: key);
   @override
-  _HtmlWebViewState createState() => _HtmlWebViewState();
+  _HtmlWebView1State createState() => _HtmlWebView1State();
 }
 
 
-class _HtmlWebViewState extends State<HtmlWebView> {
+class _HtmlWebView1State extends State<HtmlWebView1> {
 
 
   String _url="";
@@ -65,6 +64,9 @@ class _HtmlWebViewState extends State<HtmlWebView> {
           onProgressChanged: (InAppWebViewController controller, int progress) {
             double prog = progress / 100;
             print('prog --------- $prog');
+            setState(() {
+              lineProgress = prog;
+            });
           });
     }else{
       webWidget = new InAppWebView(
@@ -95,26 +97,43 @@ class _HtmlWebViewState extends State<HtmlWebView> {
           onProgressChanged: (InAppWebViewController controller, int progress) {
             double prog = progress / 100;
             print('prog --------- $prog');
+            setState(() {
+              lineProgress = prog;
+            });
           });
     }
 
     // TODO: implement build
     return  Scaffold(
-               appBar:MyAppBar(
-                 isBack: true,
-                 centerTitle: '${widget.title}',
+               appBar: AppBar(
+                 leading: IconButton(
+                   icon: Icon(Icons.arrow_back_ios,color: Colours.material_bg,),
+                   onPressed: (){
+                     NavigatorUtils.goBack(context);
+                   },
+                 ),
+                 backgroundColor: Colours.app_main,
+                 title: Text(widget.title),
+                 centerTitle:true,
+                 bottom: PreferredSize(
+                   child: _progressBar(lineProgress,context),
+                   preferredSize: Size.fromHeight(3.0),
+                 ),
                ),
-              body: Container(
-                width:  MediaQuery.of(context).size.width,
-                height:  MediaQuery.of(context).size.height,
-                child: webWidget,
-              ),
-          );
+          body: Container(
+            width:  MediaQuery.of(context).size.width,
+            height:  MediaQuery.of(context).size.height,
+            child: webWidget,
+          ),
+    );
   }
 
-  @override
-  void dispose() {
-    super.dispose();
+  _progressBar(double progress,BuildContext context) {
+    return LinearProgressIndicator(
+      backgroundColor: Colors.white70.withOpacity(0),
+      value: progress == 1.0 ? 0 : progress,
+      valueColor: new AlwaysStoppedAnimation<Color>(Colors.green),
+    );
   }
 }
 
