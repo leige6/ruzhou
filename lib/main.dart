@@ -8,13 +8,14 @@ import 'package:provider/provider.dart';
 import 'package:ruzhou/model/store.dart';
 import 'package:ruzhou/router/application.dart';
 import 'package:ruzhou/router/routers.dart';
-import 'package:flustars/flustars.dart' as FlutterStars;
+
 import 'constant/common.dart';
 import 'entity/user_entity.dart';
 import 'model/login_provider.dart';
 import 'model/select_images_model.dart';
 import 'model/theme_provider.dart';
 import 'model/user_info_model.dart';
+import 'package:flustars/flustars.dart' as FlutterStars;
 
 
  main() async {
@@ -34,6 +35,7 @@ class RuZhouApp extends StatelessWidget {
     Routers.configureRoutes(router);
     Application.router = router;
   }
+
   @override
   Widget build(BuildContext context) {
     UserEntity us =FlutterStars.SpUtil.getObj(Constant.user, (v) => UserEntity.fromJson(v));

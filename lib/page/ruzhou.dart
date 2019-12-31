@@ -77,28 +77,69 @@ class _RuZhouMainViewState extends State<RuZhouMainView> {
   }
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
-      body: SafeArea(
-        top:false,
-        child: PageView(
-          controller: pageController,
-          onPageChanged: onPageChanged,
-          children: _pageList,
-          physics: NeverScrollableScrollPhysics(), // 禁止滑动
-        ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        items: _buildBottomNavigationBarItem(),
-        currentIndex: _selectedIndex,
-        elevation: 5.0,
-        iconSize: 21.0,
-        selectedFontSize: 10,
-        unselectedFontSize: 10,
-        selectedItemColor: Colours.app_main,
-        unselectedItemColor: Colours.unselected_item_color,
-        onTap: _onItemTapped,
-      ),
+          body: SafeArea(
+            top:false,
+            child: PageView(
+              controller: pageController,
+              onPageChanged: onPageChanged,
+              children: _pageList,
+              physics: NeverScrollableScrollPhysics(), // 禁止滑动
+            ),
+          ),
+          bottomNavigationBar: BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
+            items: _buildBottomNavigationBarItem(),
+            currentIndex: _selectedIndex,
+            elevation: 5.0,
+            iconSize: 21.0,
+            selectedFontSize: 10,
+            unselectedFontSize: 10,
+            selectedItemColor: Colours.app_main,
+            unselectedItemColor: Colours.unselected_item_color,
+            onTap: _onItemTapped,
+          ),
     );
   }
+
+
+  /*loadData() async {
+    // 通过spawn新建一个isolate，并绑定静态方法
+    ReceivePort receivePort =ReceivePort();
+    await Isolate.spawn(dataInit, receivePort.sendPort);
+
+    // 获取新isolate的监听port
+    SendPort sendPort = await receivePort.first;
+    // 调用sendReceive自定义方法
+    List dataList = await sendReceive(sendPort, 'https://jsonplaceholder.typicode.com/posts');
+    print('dataList $dataList');
+  }
+
+  // isolate的绑定方法
+  static dataInit(SendPort sendPort) async{
+    // 创建监听port，并将sendPort传给外界用来调用
+    ReceivePort receivePort =ReceivePort();
+    sendPort.send(receivePort.sendPort);
+
+    // 监听外界调用
+    await for (var msg in receivePort) {
+      String requestURL =msg[0];
+      SendPort callbackPort =msg[1];
+
+      Client client = Client();
+      Response response = await client.get(requestURL);
+      List dataList = json.decode(response.body);
+      // 回调返回值给调用者
+      callbackPort.send(dataList);
+    }
+  }
+
+  // 创建自己的监听port，并且向新isolate发送消息
+  Future sendReceive(SendPort sendPort, String url) {
+    ReceivePort receivePort =ReceivePort();
+    sendPort.send([url, receivePort.sendPort]);
+    // 接收到返回值，返回给调用者
+    return receivePort.first;
+  }*/
 }
